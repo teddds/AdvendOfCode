@@ -14,7 +14,7 @@ class Tail extends Base
 		}
 
 		//Check Collusion
-		if($this->checkCollosions($x, $this->y+1)){
+		if($this->checkCollosions($x, $this->y-1)){
 			return;
 		}
 
