@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @coversNothing
  */
-class BridgeGridOperatorTest extends TestCase
+class Test extends TestCase
 {
     public const FILE = __DIR__.DIRECTORY_SEPARATOR.'input.txt';
 

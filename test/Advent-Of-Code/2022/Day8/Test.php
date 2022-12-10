@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @coversNothing
  */
-class TreeTopHouseTest extends TestCase
+class Test extends TestCase
 {
     public const FILE = __DIR__.DIRECTORY_SEPARATOR.'input.txt';
 

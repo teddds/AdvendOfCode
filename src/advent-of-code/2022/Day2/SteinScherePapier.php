@@ -2,8 +2,6 @@
 
 namespace AdventOfCode\Y2022\Day2;
 
-use function PHPUnit\Framework\matches;
-
 enum SteinScherePapier: int {
 
 	private const STEIN_SCORE = 1;

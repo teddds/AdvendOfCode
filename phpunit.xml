@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
+		 bootstrap="test/bootstrap.php"
+		 beStrictAboutOutputDuringTests="true"
+		 beStrictAboutTodoAnnotatedTests="true"
+		 verbose="true"
+		 cacheResult="true"
+		 backupGlobals="false"
+>
+	<coverage cacheDirectory="test/cache"
+			  includeUncoveredFiles="false"
+			  processUncoveredFiles="false"
+			  pathCoverage="false"
+			  ignoreDeprecatedCodeUnits="true"
+			  disableCodeCoverageIgnore="false">
+		<include>
+			<directory suffix=".php">src</directory>
+		</include>
+
+		<report>
+			<html outputDirectory="test/_reports/coverage" lowUpperBound="50" highLowerBound="90"/>
+		</report>
+	</coverage>
+
+	<testsuites>
+		<testsuite name="AdventOfCode">
+			<directory suffix="Test.php">test/Advent-Of-Code</directory>
+		</testsuite>
+		<testsuite name="Fest">
+			<directory suffix="Test.php">test/Festo</directory>
+		</testsuite>
+	</testsuites>
+
+	<logging>
+		<junit outputFile="test/_reports/junit-logfile.xml"/>
+	</logging>
+
+	<php>
+		<ini name="date.timezone" value="Europe/Berlin"/>
+		<ini name="memory_limit" value="-1"/>
+	</php>
+
+</phpunit>
