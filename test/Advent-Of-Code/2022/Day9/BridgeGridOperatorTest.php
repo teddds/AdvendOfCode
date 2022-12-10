@@ -21,16 +21,16 @@ class BridgeGridOperatorTest extends TestCase
      */
     public function tileCountTest(): void
     {
-        $fs = new BridgeGridOperator(self::FILE, true);
+        $fs = new BridgeGridOperator(self::FILE, false);
         $this->assertEquals(13, $fs->getUsedTilesByTail());
     }
 
-	/**
-	 * @test
-	 */
-	public function getScenicScoreTest(): void
-	{
-		$fs = new TreeMapOperator(self::FILE);
-		$this->assertEquals(8, $fs->getMaxScenicScore());
-	}
+//	/**
+//	 * @test
+//	 */
+//	public function getScenicScoreTest(): void
+//	{
+//		$fs = new TreeMapOperator(self::FILE);
+//		$this->assertEquals(8, $fs->getMaxScenicScore());
+//	}
 }

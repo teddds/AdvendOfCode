@@ -12,7 +12,7 @@ class BridgeGridOperator
 	private int $min_y;
 	private int $max_y;
 
-	private const INPUT = __DIR__ . DIRECTORY_SEPARATOR . 'input.txt';
+	private const INPUT = __DIR__ . DIRECTORY_SEPARATOR . 'input_maik.txt';
 
 	public function __construct(private ?string $path = null, private $printing = false){
 		$this->path ??= self::INPUT;
