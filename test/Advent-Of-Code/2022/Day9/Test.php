@@ -16,7 +16,7 @@ class Test extends TestCase
      */
     public function tileCountTest(): void
     {
-        $fs = new BridgeGridOperator(self::FILE, false);
+        $fs = new BridgeGridOperator(self::FILE, true);
         $this->assertEquals(13, $fs->getUsedTilesByTail());
     }
 
