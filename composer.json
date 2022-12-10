@@ -30,8 +30,7 @@
 			"Festo\\Y2022\\": "src/festo/2022/"
 		},
 		"classmap": [
-			"src/advent-of-code",
-			"src/festo",
+			"src",
 			"utils",
 			"test"
 		]
