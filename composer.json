@@ -1,0 +1,34 @@
+{
+	"name": "teddds/advend-of-code",
+	"description": "description",
+	"minimum-stability": "stable",
+	"license": "proprietary",
+	"authors": [
+		{
+			"name": "a.homburg",
+			"email": "email@example.com"
+		}
+	],
+	"repositories": [
+		{
+			"type": "vcs",
+			"url":  "https://github.com/tijnhendrikson/PHP-Multivariate-Regression"
+		}
+	],
+	"require": {
+		"nesbot/carbon": "2.63.0",
+		"numphp/numphp": "v1.2.0",
+		"liacmedia/php-multivariate-regression":"dev-master"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "9.5.26"
+	},
+	"autoload": {
+		"classmap": [
+			"advent-of-code",
+			"festo",
+			"utils",
+			"test"
+		]
+	}
+}

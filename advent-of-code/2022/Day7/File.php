@@ -1,0 +1,8 @@
+<?php
+declare(strict_types=1);
+namespace AdventOfCode\Y2022\Day7;
+class File
+{
+	public string $name = '';
+	public int $size = 0;
+}
