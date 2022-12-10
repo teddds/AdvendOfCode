@@ -30,9 +30,7 @@
 			"Festo\\Y2022\\": "src/festo/2022/"
 		},
 		"classmap": [
-			"src",
-			"utils",
-			"test"
+			"src"
 		]
 	}
 }
