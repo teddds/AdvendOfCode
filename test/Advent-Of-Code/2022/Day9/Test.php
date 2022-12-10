@@ -7,11 +7,6 @@ use AdventOfCode\Y2022\Day8\TreeMapOperator;
 use AdventOfCode\Y2022\Day9\BridgeGridOperator;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @internal
- *
- * @coversNothing
- */
 class Test extends TestCase
 {
     public const FILE = __DIR__.DIRECTORY_SEPARATOR.'input.txt';

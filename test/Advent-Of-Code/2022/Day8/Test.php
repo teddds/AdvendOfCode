@@ -5,12 +5,6 @@ namespace Test\AdventOfCode\Y2022\Day8;
 use AdventOfCode\Y2022\Day7\FileOperator;
 use AdventOfCode\Y2022\Day8\TreeMapOperator;
 use PHPUnit\Framework\TestCase;
-
-/**
- * @internal
- *
- * @coversNothing
- */
 class Test extends TestCase
 {
     public const FILE = __DIR__.DIRECTORY_SEPARATOR.'input.txt';
