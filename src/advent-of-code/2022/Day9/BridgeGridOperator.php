@@ -4,20 +4,26 @@ namespace AdventOfCode\Y2022\Day9;
 class BridgeGridOperator
 {
 
-	public Head $head;
-	public Tail $tail;
+	public Knot $head;
 
 	private int $min_x;
 	private int $max_x;
 	private int $min_y;
 	private int $max_y;
 
-	private const INPUT = __DIR__ . DIRECTORY_SEPARATOR . 'input_maik.txt';
+	private const INPUT = __DIR__ . DIRECTORY_SEPARATOR . 'input.txt';
 
-	public function __construct(private ?string $path = null, private $printing = false){
+	public function __construct(private ?string $path = null, private $printing = false, int $knots = 1){
 		$this->path ??= self::INPUT;
-		$this->tail = new Tail($this);
-		$this->head = new Head(	$this);
+		$this->head = new Knot($this);
+
+		$prev = $this->head;
+		for($i=0; $i<$knots; $i++){
+			$a = new Knot($this);
+			$a->name = (string) ($i+1);
+			$prev->next = $a;
+			$prev = $a;
+		}
 
 	}
 
@@ -25,9 +31,9 @@ class BridgeGridOperator
 	public function getUsedTilesByTail(): int {
 		$this->calcDimensions();
 		$this->applyOperations();
-		$cnt = 1;
+		$cnt = 0;
 
-		array_walk_recursive($this->tail->tiles, function() use (&$cnt) { $cnt++; } );
+		array_walk_recursive($this->head->getLastKnot()->grid, function() use (&$cnt) { $cnt++; } );
 		return $cnt;
 	}
 
@@ -67,20 +73,17 @@ class BridgeGridOperator
 
 		$this->print('Initial State');
 
+		$prevHead = new Knot($this);
 		foreach (\Utils::readFile($this->path) as $row) {
-			$row = trim($row);
-			if(preg_match('/(R|U|L|D)\s+(\d+)/', $row, $match)){
-				$this->print($row);
-				switch($match[1]){
-					case 'R':
-						$this->head->right((int) $match[2]); break;
-					case 'U':
-						$this->head->up((int) $match[2]); break;
-					case 'L':
-						$this->head->left((int) $match[2]); break;
-					case 'D':
-						$this->head->down((int) $match[2]); break;
-				}
+			[$direction, $steps] = sscanf($row, "%s %d");
+			$this->print(trim($row));
+
+			$d = Direction::from($direction);
+			$fn = 'moveOne' . $d->getFullname();
+
+			for(;$steps > 0; $steps--){
+				$this->head->{$fn}();
+				$this->print();
 			}
 		}
 
@@ -102,32 +105,57 @@ class BridgeGridOperator
 				if($slope){
 					if($isStart){
 						echo 's ';
-					}elseif(isset($this->tail->tiles[$i][$j])){
+					}elseif(isset($this->head->getLastKnot()->grid[$i][$j])){
 						echo '# ';
 					}else{
 						echo '. ';
 					}
 				}else{
-					$isHead = $this->head->x === $j && $this->head->y === $i;
-					$isTail = $this->tail->x === $j && $this->tail->y === $i;
-					if($isHead){
-						if($isTail){
-							$covers['H'][] = 'T';
+
+					$writing = [];
+					foreach($this->head->getKnots() as $knot){
+						if($knot->x === $j && $knot->y === $i){
+							if($isStart){
+								$covers[$knot->name[0]][] = 's';
+							}
+							$writing[] = $knot->name[0];
 						}
-						if($isStart){
-							$covers['H'][] = 's';
-						}
-						echo 'H ';
-					}elseif($isTail){
-						if($isStart){
-							$covers['T'][] = 's';
-						}
-						echo 'T ';
-					}elseif($isStart){
-						echo 's ';
-					}else{
-						echo '. ';
 					}
+
+					if(empty($writing)){
+						if($isStart){
+							echo 's ';
+						}else{
+							echo '. ';
+						}
+					}else{
+						echo $writing[0]. ' ';
+						for($m=1; $m<count($writing); $m++){
+							$covers[$writing[0]][] = $writing[$m];
+						}
+					}
+
+//					$isHead = $this->head->x === $j && $this->head->y === $i;
+//
+//					$isTail = $this->head->next->x === $j && $this->head->next->y === $i;
+//					if($isHead){
+//						if($isTail){
+//							$covers['H'][] = 'T';
+//						}
+//						if($isStart){
+//							$covers['H'][] = 's';
+//						}
+//						echo 'H ';
+//					}elseif($isTail){
+//						if($isStart){
+//							$covers['T'][] = 's';
+//						}
+//						echo 'T ';
+//					}elseif($isStart){
+//						echo 's ';
+//					}else{
+//						echo '. ';
+//					}
 				}
 			}
 			if(!empty($covers)){
