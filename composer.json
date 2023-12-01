@@ -21,12 +21,14 @@
 		"liacmedia/php-multivariate-regression":"dev-master"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "^9.5"
+		"phpunit/phpunit": "^9.6",
+		"friendsofphp/php-cs-fixer": "^3.40"
 	},
 	"autoload": {
 		"psr-4": {
 			"AdventOfCode\\Y2022\\": "src/advent-of-code/2022/",
-			"AdventOfCode\\Y2002\\": "src/advent-of-code/2020/",
+			"AdventOfCode\\Y2020\\": "src/advent-of-code/2020/",
+			"AdventOfCode\\Y2023\\": "src/advent-of-code/2023/",
 			"Festo\\Y2022\\": "src/festo/2022/"
 		},
 		"classmap": [
