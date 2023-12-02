@@ -16,8 +16,8 @@
 		}
 	],
 	"require": {
-		"nesbot/carbon": "2.63.0",
-		"numphp/numphp": "v1.2.0",
+		"nesbot/carbon": "^2.63",
+		"numphp/numphp": "^v1.2",
 		"liacmedia/php-multivariate-regression":"dev-master"
 	},
 	"require-dev": {
@@ -34,5 +34,10 @@
 		"classmap": [
 			"src"
 		]
+	},
+	"scripts": {
+		"phpunit_advendofcode_2022": "php -dxdebug.coverage_enable=true vendor/bin/phpunit --configuration=phpunit.xml --testsuite=AdventOfCode2022 --coverage-xml=test/_reports/coverage-xml --coverage-cobertura=test/_reports/cobertura-coverage.xml --log-junit=test/_reports/unit.junit.xml",
+		"phpunit_advendofcode_2023": "php -dxdebug.coverage_enable=true vendor/bin/phpunit --configuration=phpunit.xml --testsuite=AdventOfCode2023 --coverage-xml=test/_reports/coverage-xml --coverage-cobertura=test/_reports/cobertura-coverage.xml --log-junit=test/_reports/unit.junit.xml",
+		"phpunit_festo_2022": "php -dxdebug.coverage_enable=true vendor/bin/phpunit --configuration=phpunit.xml --testsuite=Festo2022 --coverage-xml=test/_reports/coverage-xml --coverage-cobertura=test/_reports/cobertura-coverage.xml --log-junit=test/_reports/unit.junit.xml"
 	}
 }
