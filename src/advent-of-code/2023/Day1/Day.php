@@ -5,9 +5,9 @@ namespace AdventOfCode\Y2023\Day1;
 
 use Utils;
 
-class Day
+final class Day
 {
-	public function __construct(private string $inputPath) {}
+	public function __construct(private readonly string $inputPath) {}
 
 	public function getSumCalibrationValues(): int
 	{
