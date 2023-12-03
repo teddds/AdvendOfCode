@@ -1,14 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Test\AdventOfCode\Y2023\Day2;
+namespace Test\AdventOfCode\Y2023\Day3;
 
-use AdventOfCode\Y2023\Day2\CubeSet;
-use AdventOfCode\Y2023\Day2\Day;
+use AdventOfCode\Y2023\Day3\Day;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \AdventOfCode\Y2023\Day2\Day
+ * @covers \AdventOfCode\Y2023\Day3\Day
  *
  * @internal
  */
@@ -21,25 +20,24 @@ class Test extends TestCase
 	/**
 	 * @test
 	 */
-	public function sumPlayableGames(): void
+	public function sumAllPartNumbersOfEngine(): void
 	{
 		$day = new Day(self::SAMPLE_FILE_PART_1);
-		$maxCubeSet = new CubeSet(green: 13, red: 12, blue: 14);
-		$this->assertEquals(8, $day->getSumPlayableGames($maxCubeSet));
+		$this->assertEquals(4361, $day->getSumAllPartNumbersOfEngine());
 
 		$day = new Day(self::FILE);
-		$this->assertEquals(2810, $day->getSumPlayableGames($maxCubeSet));
+		$this->assertEquals(540212, $day->getSumAllPartNumbersOfEngine());
 	}
 
 	/**
 	 * @test
 	 */
-	public function sumMinimumCubeSetPower(): void
+	public function sumAllGearRatios(): void
 	{
 		$day = new Day(self::SAMPLE_FILE_PART_1);
-		$this->assertEquals(2286, $day->getSumPowersOfMiniumCubeSets());
+		$this->assertEquals(467835, $day->getSumOfAllGearRatios());
 
 		$day = new Day(self::FILE);
-		$this->assertEquals(69110, $day->getSumPowersOfMiniumCubeSets());
+		$this->assertEquals(87605697, $day->getSumOfAllGearRatios());
 	}
 }

@@ -26,7 +26,7 @@ class Test extends TestCase
 		$this->assertEquals(142, $day->getSumCalibrationValues());
 
 		$day = new Day(self::FILE);
-		$result = $day->getSumCalibrationValues();
+		$this->assertEquals(53386, $day->getSumCalibrationValues());
 	}
 
 	/**
@@ -38,6 +38,6 @@ class Test extends TestCase
 		$this->assertEquals(281, $day->getSumCalibrationSpellingValues());
 
 		$day = new Day(self::FILE);
-		$result = $day->getSumCalibrationSpellingValues();
+		$this->assertEquals(53312, $day->getSumCalibrationSpellingValues());
 	}
 }
