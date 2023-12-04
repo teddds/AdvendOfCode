@@ -5,6 +5,9 @@ namespace AdventOfCode\Y2023\Day4;
 
 class Card
 {
+	private ?array $intersect = null;
+	private ?int $intersectCount = null;
+
 	/**
 	 * @param int $id
 	 * @param int[] $winningNumbers
@@ -20,19 +23,18 @@ class Card
 
 	public function getPoints(): int
 	{
-		$intersect = $this->getIntersect();
-		$ln = count($intersect);
+		$count = $this->getCountIntersect();
 
-		if ($ln === 0) {
+		if ($count === 0) {
 			return 0;
 		}
 
-		if ($ln === 1) {
+		if ($count === 1) {
 			return 1;
 		}
 
 		$result = 1;
-		for ($i = 1; $i < $ln; ++$i) {
+		for ($i = 1; $i < $count; ++$i) {
 			$result *= 2;
 		}
 
@@ -41,15 +43,12 @@ class Card
 
 	public function getSumInstances(): int
 	{
-		$intersect = $this->getIntersect();
-		$ln = count($intersect);
+		$count = $this->getCountIntersect();
 
 		$total = 0;
-		if ($ln) {
-			// Nachfolger bekommen Copies
-			for ($i = 1; $i <= $ln; ++$i) {
-				$total += 1 + (int) $this->cardCollection->getCard($this->id + $i)?->getSumInstances();
-			}
+
+		for ($i = 1; $i <= $count; ++$i) {
+			$total += 1 + (int) $this->cardCollection->getCard($this->id + $i)?->getSumInstances();
 		}
 
 		return $total;
@@ -57,6 +56,19 @@ class Card
 
 	private function getIntersect(): array
 	{
-		return array_intersect($this->winningNumbers, $this->chosenNumbers);
+		if ($this->intersect === null) {
+			$this->intersect = array_intersect($this->winningNumbers, $this->chosenNumbers);
+		}
+
+		return $this->intersect;
+	}
+
+	private function getCountIntersect(): int
+	{
+		if ($this->intersectCount === null) {
+			$this->intersectCount = count($this->getIntersect());
+		}
+
+		return $this->intersectCount;
 	}
 }
