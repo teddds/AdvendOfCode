@@ -17,9 +17,10 @@ class CardCollection
 		return $card;
 	}
 
-    public function count(): int {
-        return count($this->cards);
-    }
+	public function count(): int
+	{
+		return count($this->cards);
+	}
 
 	public function getCard(int $id): ?Card
 	{
@@ -35,5 +36,4 @@ class CardCollection
 			yield $card;
 		}
 	}
-
 }
