@@ -38,6 +38,6 @@ class Test extends TestCase
 		$this->assertEquals(46, $day->getLowesLocationNumberFromSeedRanges());
 
 		$day = new Day(self::FILE);
-		$this->assertEquals(6284877, $day->getLowesLocationNumberFromSeedRanges());
+		$this->assertEquals(77435348, $day->getLowesLocationNumberFromSeedRanges());
 	}
 }

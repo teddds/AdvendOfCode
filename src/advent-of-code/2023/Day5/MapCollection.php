@@ -3,11 +3,12 @@ declare(strict_types=1);
 
 namespace AdventOfCode\Y2023\Day4;
 
+use Generator;
 use LogicException;
 
 class MapCollection
 {
-	private array $seedsDone = [];
+	private array $cache = [];
 
 	/**
 	 * @param Map[] $maps
@@ -21,30 +22,42 @@ class MapCollection
 		$this->maps[$map->from] = $map;
 	}
 
+	public function getMap(string $from): ?Map
+	{
+		return $this->maps[$map->from] ?? null;
+	}
+
 	public function getMinLocation(Seeds $seeds): int
 	{
 		$min = 10000000000000000;
 
 		foreach ($seeds->getNextSeed() as $seed) {
-			if (isset($this->seedsDone[$seed])) {
-				continue;
-			}
 			$location = $this->runThroughMaps('seed', $seed, 'location');
 			$min = min($location, $min);
-			$seedsDone[$seed] = $location;
 		}
 
 		return $min;
 	}
 
-	public function getMap(string $from): ?Map
+	/**
+	 * @return Generator<Map>
+	 */
+	public function from(string $from): Generator
 	{
-		return $this->maps[$from] ?? null;
+		$toYield = false;
+		foreach ($this->maps as $map) {
+			if ($map->from === $from) {
+				$toYield = true;
+			}
+			if ($toYield) {
+				yield $map;
+			}
+		}
 	}
 
 	private function runThroughMaps(string $from, int $seed, string $to): int
 	{
-		$map = $this->getMap($from);
+		$map = $this->maps[$from] ?? null;
 		if (!$map) {
 			throw new LogicException('Map does not exist.');
 		}
