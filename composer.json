@@ -16,9 +16,10 @@
 		}
 	],
 	"require": {
-		"nesbot/carbon": "^2.63",
+		"nesbot/carbon": "^2.72",
 		"numphp/numphp": "^v1.2",
-		"liacmedia/php-multivariate-regression":"dev-master"
+		"liacmedia/php-multivariate-regression":"dev-master",
+		"symfony/process": "^6.4"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "^9.6",

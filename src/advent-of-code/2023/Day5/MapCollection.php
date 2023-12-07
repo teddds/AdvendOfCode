@@ -7,6 +7,8 @@ use LogicException;
 
 class MapCollection
 {
+	private array $seedsDone = [];
+
 	/**
 	 * @param Map[] $maps
 	 */
@@ -24,8 +26,12 @@ class MapCollection
 		$min = 10000000000000000;
 
 		foreach ($seeds->getNextSeed() as $seed) {
+			if (isset($this->seedsDone[$seed])) {
+				continue;
+			}
 			$location = $this->runThroughMaps('seed', $seed, 'location');
 			$min = min($location, $min);
+			$seedsDone[$seed] = $location;
 		}
 
 		return $min;

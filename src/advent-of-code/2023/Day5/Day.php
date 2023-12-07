@@ -88,7 +88,7 @@ final class Day
 				$firstLineProcessed = true;
 			} else {
 				$map->addRange(
-					new Range(...array_map(static fn (string $item) => (int) $item, explode(' ', $row)), map: $map)
+					new Range(...array_map(static fn (string $item) => (int) $item, explode(' ', $row)))
 				);
 			}
 		}

@@ -5,17 +5,22 @@ namespace AdventOfCode\Y2023\Day4;
 
 class Range
 {
+	private int $sourceRangeEnd;
+	private int $delta;
+
 	public function __construct(
 		public readonly int $destinationRangeStart,
 		public readonly int $sourceRangeStart,
 		public readonly int $rangeLength,
-		private readonly Map $map
-	) {}
+	) {
+		$this->sourceRangeEnd = $this->sourceRangeStart + $this->rangeLength;
+		$this->delta = $this->destinationRangeStart - $this->sourceRangeStart;
+	}
 
 	public function getMappedDestinationValue(int $sourceValue): ?int
 	{
-		if ($sourceValue >= $this->sourceRangeStart && $sourceValue <= $this->sourceRangeStart + $this->rangeLength) {
-			return $this->destinationRangeStart + $sourceValue - $this->sourceRangeStart;
+		if ($sourceValue >= $this->sourceRangeStart && $sourceValue <= $this->sourceRangeEnd) {
+			return $sourceValue + $this->delta;
 		}
 
 		return null;
