@@ -19,7 +19,7 @@ final class Day
 		return array_sum(array_map(static fn (MathRow $row) => $row->getNextExtrapolateValue(), $this->mathRows));
 	}
 
-    public function getSumExtrapolateValuesBackwards(): int
+	public function getSumExtrapolateValuesBackwards(): int
 	{
 		$this->readInput();
 

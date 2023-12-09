@@ -8,7 +8,7 @@ use AdventOfCode\Y2023\Day7\Day;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \AdventOfCode\Y2023\Day3\Day
+ * @covers \AdventOfCode\Y2023\Day7\Day
  *
  * @internal
  */
