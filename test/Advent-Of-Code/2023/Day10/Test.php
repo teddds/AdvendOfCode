@@ -14,23 +14,27 @@ use PHPUnit\Framework\TestCase;
 class Test extends TestCase
 {
 	private const FILE = __DIR__ . DIRECTORY_SEPARATOR . 'input.txt';
-	private const SAMPLE_FILE_PART_1 = __DIR__ . DIRECTORY_SEPARATOR . 'inputPart1Sample.txt';
-	private const SAMPLE_FILE_2_PART_1 = __DIR__ . DIRECTORY_SEPARATOR . 'inputPart1Sample2.txt';
-	private const SAMPLE_FILE_3_PART_1 = __DIR__ . DIRECTORY_SEPARATOR . 'inputPart1Sample3.txt';
+	private const PART_1_SAMPLE_FILE_1 = __DIR__ . DIRECTORY_SEPARATOR . 'Part1SampleFile1.txt';
+	private const PART_1_SAMPLE_FILE_2 = __DIR__ . DIRECTORY_SEPARATOR . 'Part1SampleFile2.txt';
+	private const PART_1_SAMPLE_FILE_3 = __DIR__ . DIRECTORY_SEPARATOR . 'Part1SampleFile3.txt';
+
+	private const PART_2_SAMPLE_FILE_1 = __DIR__ . DIRECTORY_SEPARATOR . 'Part2SampleFile1.txt';
+	private const PART_2_SAMPLE_FILE_2 = __DIR__ . DIRECTORY_SEPARATOR . 'Part2SampleFile2.txt';
+	private const PART_2_SAMPLE_FILE_3 = __DIR__ . DIRECTORY_SEPARATOR . 'Part2SampleFile3.txt';
 
 	/**
 	 * @test
 	 */
 	public function farthesPoint(): void
 	{
-		$day = new Day(self::SAMPLE_FILE_2_PART_1);
-		$this->assertEquals(4, $day->getFarthesPoint());
-
-		$day = new Day(self::SAMPLE_FILE_3_PART_1);
-		$this->assertEquals(4, $day->getFarthesPoint());
-
-		$day = new Day(self::SAMPLE_FILE_PART_1);
+		$day = new Day(self::PART_1_SAMPLE_FILE_1);
 		$this->assertEquals(8, $day->getFarthesPoint());
+
+		$day = new Day(self::PART_1_SAMPLE_FILE_2);
+		$this->assertEquals(4, $day->getFarthesPoint());
+
+		$day = new Day(self::PART_1_SAMPLE_FILE_3);
+		$this->assertEquals(4, $day->getFarthesPoint());
 
 		$day = new Day(self::FILE);
 		$this->assertEquals(6860, $day->getFarthesPoint());
@@ -39,12 +43,18 @@ class Test extends TestCase
 	/**
 	 * @test
 	 */
-	public function stepCountLeastCommonMultiple(): void
+	public function farthesPointWithinLoop(): void
 	{
-		$day = new Day(self::SAMPLE_FILE_PART_1);
-		$this->assertEquals(2, $day->getSumExtrapolateValuesBackwards());
+		$day = new Day(self::PART_2_SAMPLE_FILE_1);
+		$this->assertEquals(4, $day->getFarthesPointWithInLoop());
+
+		$day = new Day(self::PART_2_SAMPLE_FILE_2);
+		$this->assertEquals(8, $day->getFarthesPointWithInLoop());
+
+		$day = new Day(self::PART_2_SAMPLE_FILE_3);
+		$this->assertEquals(10, $day->getFarthesPointWithInLoop());
 
 		$day = new Day(self::FILE);
-		$this->assertEquals(1031, $day->getSumExtrapolateValuesBackwards());
+		$this->assertEquals(6860, $day->getFarthesPointWithInLoop());
 	}
 }
