@@ -5,7 +5,4 @@ namespace AdventOfCode\Y2023\Day10;
 
 use LogicException;
 
-final class NoLoopException extends LogicException
-{
-
-}
+final class NoLoopException extends LogicException {}

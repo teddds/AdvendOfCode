@@ -588,16 +588,15 @@ mem[4762] = 21717
 mem[26613] = 40
 ';
 
-//$source = 'mask = 000000000000000000000000000000X1001X
-//mem[42] = 100
-//mask = 00000000000000000000000000000000X0XX
-//mem[26] = 1
-//';
+// $source = 'mask = 000000000000000000000000000000X1001X
+// mem[42] = 100
+// mask = 00000000000000000000000000000000X0XX
+// mem[26] = 1
+// ';
 
 class Bitmask
 {
-
-	/** @var Operation[]  */
+	/** @var Operation[] */
 	private array $operations = [];
 
 	public function __construct(string $input)
@@ -605,19 +604,19 @@ class Bitmask
 		$rows = explode("\n", $input);
 		$mask = null;
 		foreach ($rows as $row) {
-			if(preg_match('/^mask = (.+?)$/', $row, $match)){
+			if (preg_match('/^mask = (.+?)$/', $row, $match)) {
 				$mask = $match[1];
-			}else if(preg_match('/^mem\[(\d+)] = (.+?)$/', $row, $match) && $mask){
-				$this->operations[] = new Operation((int)$match[1], (int) $match[2], $mask);
+			} elseif (preg_match('/^mem\[(\d+)] = (.+?)$/', $row, $match) && $mask) {
+				$this->operations[] = new Operation((int) $match[1], (int) $match[2], $mask);
 			}
 		}
 	}
 
-	public function getSum(): int {
-
+	public function getSum(): int
+	{
 		$result = [];
-		foreach($this->operations as $operation){
-			foreach($operation->getOperations() as $op){
+		foreach ($this->operations as $operation) {
+			foreach ($operation->getOperations() as $op) {
 				$result[$op->getIndex()] = $op->getValue();
 			}
 		}
@@ -626,54 +625,61 @@ class Bitmask
 	}
 }
 
-class Operation {
+class Operation
+{
 	private int $index;
 	private int $value;
 	private string $mask;
 
-	public function __construct(int $index, int $value, string $mask) {
+	public function __construct(int $index, int $value, string $mask)
+	{
 		$this->index = $index;
 		$this->value = $value;
 		$this->mask = $mask;
 	}
 
 	/** @return self[] */
-	public function getOperations(): array {
+	public function getOperations(): array
+	{
 		$bits = $this->convertDecimalToBits($this->index, strlen($this->mask));
 		$maskedValue = $this->applyMask($bits);
+
 		return $this->getMutations($maskedValue);
 	}
 
 	/**
 	 * @return int
 	 */
-	public function getIndex(): int {
+	public function getIndex(): int
+	{
 		return $this->index;
 	}
 
 	/**
 	 * @return int
 	 */
-	public function getValue(): int {
+	public function getValue(): int
+	{
 		return $this->value;
 	}
 
-
-	private function convertDecimalToBits(int $number, int $padding): string {
+	private function convertDecimalToBits(int $number, int $padding): string
+	{
 		return str_pad(decbin($number), $padding, '0', STR_PAD_LEFT);
 	}
 
-	private function applyMask(string $bits): string {
-		for($i=strlen($this->mask)-1; $i>=0; $i--){
-			if($this->mask[$i] === '0'){
+	private function applyMask(string $bits): string
+	{
+		for ($i = strlen($this->mask) - 1; $i >= 0; --$i) {
+			if ($this->mask[$i] === '0') {
 				continue;
 			}
 
-			if($this->mask[$i] === '1'){
+			if ($this->mask[$i] === '1') {
 				$bits[$i] = '1';
 			}
 
-			if($this->mask[$i] === 'X'){
+			if ($this->mask[$i] === 'X') {
 				$bits[$i] = 'X';
 			}
 		}
@@ -681,35 +687,37 @@ class Operation {
 		return $bits;
 	}
 
-
-	private function convertBitsToDecimal(string $bits): int {
+	private function convertBitsToDecimal(string $bits): int
+	{
 		return bindec($bits);
 	}
 
-	private function getMutations(string $maskedValue): array {
+	private function getMutations(string $maskedValue): array
+	{
 		$store = [];
 		$this->findPermutation($maskedValue, $store, strlen($maskedValue));
 		$result = [];
-		foreach($store as $bitValue){
+		foreach ($store as $bitValue) {
 			$result[] = new self($this->convertBitsToDecimal($bitValue), $this->value, $this->mask);
 		}
 
 		return $result;
 	}
 
-	private function findPermutation(string $mask, array &$store, int $length, int $start = 0): void {
+	private function findPermutation(string $mask, array &$store, int $length, int $start = 0): void
+	{
 		$no_x_yet = true;
-		for($i=$start; $i<$length; $i++){
-			if($mask[$i] === 'X'){
+		for ($i = $start; $i < $length; ++$i) {
+			if ($mask[$i] === 'X') {
 				$no_x_yet = false;
-				foreach([1,0] as $value){
+				foreach ([1, 0] as $value) {
 					$mask[$i] = $value;
 					$this->findPermutation($mask, $store, $length, $i);
 				}
 			}
 		}
 
-		if($no_x_yet){
+		if ($no_x_yet) {
 			$store[$mask] = $mask;
 		}
 	}

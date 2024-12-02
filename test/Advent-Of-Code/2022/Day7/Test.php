@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Test\AdventOfCode\Y2022\Day7;
 
@@ -7,16 +8,16 @@ use PHPUnit\Framework\TestCase;
 
 class Test extends TestCase
 {
-    public const FILE = __DIR__.DIRECTORY_SEPARATOR.'input.txt';
+	public const FILE = __DIR__ . DIRECTORY_SEPARATOR . 'input.txt';
 
-    /**
-     * @test
-     */
-    public function sizeTest(): void
-    {
-        $fs = new FileOperator(self::FILE);
-        $this->assertEquals(95437, $fs->getTotalSizeOfAllDirectorysLessThan());
-    }
+	/**
+	 * @test
+	 */
+	public function sizeTest(): void
+	{
+		$fs = new FileOperator(self::FILE);
+		$this->assertEquals(95437, $fs->getTotalSizeOfAllDirectorysLessThan());
+	}
 
 	/**
 	 * @test

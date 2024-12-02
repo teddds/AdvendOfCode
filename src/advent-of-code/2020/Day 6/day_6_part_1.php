@@ -1,4 +1,5 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
 
 $source = 'vkplsqwiftuazyje
 mokluxwbsfhgc
@@ -2143,13 +2144,13 @@ foreach ($rows as $row) {
 	$groups[$cnt] ??= [];
 
 	$content = str_split($row);
-	foreach($content as $value){
+	foreach ($content as $value) {
 		$groups[$cnt][$value] = true;
 	}
 }
 
 $sum = 0;
-foreach($groups as $group){
+foreach ($groups as $group) {
 	$sum += count($group);
 }
 

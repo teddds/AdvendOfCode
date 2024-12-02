@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
+
 namespace AdventOfCode\Y2020\Day11\Part2;
+
 $source = 'LLLLLLLLL.L.LLLLLLLLLLLLL.LLLLLLL.LLLL.LLLLLLLLLLLLLLLLLL.LLLL.LLLLL.LLLLLLL.LLLLL.LLLLLLLLLLLLLLL
 LLLLLLLLLLLLLLLLLLLLLLLLL.LLLLLLLLLLLLLLLLLLLLLL.LLLLLLLL.LLLLLLLLLL.LLLLLLL.LLLLL.LLLLL.LLLLLLLLL
 LLLLLLLLL.LLLLLLLLLLLLLLL.LLLLLLLLLLLLLLLLLLLLLL.LLLLLLLL.LL.LLLLLLL.LLLLLLL.LLLLLLLLLLLLLLLLLLLLL
@@ -100,16 +102,16 @@ LLLLLLLLLLLL.LLL.LLLLLLLL.LLLLLLLLLLLLLLLLLLLLLL.LLLLLLLL.LLLL.LLLLL.LLLLLLL.LLL
 LLLLLLLLLLLLLLLL.LLLLLLLL.LLLL.LL.LLLLLLL.LLLLLL.LLLLLLLL.LLLL.LLLLLLLLLLLLL.LLLLL.LLLLL.LLLLLLLLL
 LLLLLLLL..LLLLLL.LLL.LLLL.LLLLLLL.LLLL.LLLLLLLLL.LLLL.LLL.LLLL.LLLLL.LLLLLLLLLLLLLLLLLLL.LLLLLLLLL';
 
-//$source = 'L.LL.LL.LL
-//LLLLLLL.LL
-//L.L.L..L..
-//LLLL.LL.LL
-//L.LL.LL.LL
-//L.LLLLL.LL
-//..L.L.....
-//LLLLLLLLLL
-//L.LLLLLL.L
-//L.LLLLL.LL';
+// $source = 'L.LL.LL.LL
+// LLLLLLL.LL
+// L.L.L..L..
+// LLLL.LL.LL
+// L.LL.LL.LL
+// L.LLLLL.LL
+// ..L.L.....
+// LLLLLLLLLL
+// L.LLLLLL.L
+// L.LLLLL.LL';
 
 class Map
 {
@@ -158,7 +160,7 @@ class Map
 
 	private function printMap()
 	{
-		if(!$this->print){
+		if (!$this->print) {
 			return;
 		}
 		echo "\n";
@@ -179,7 +181,7 @@ class Map
 					continue;
 				}
 
-				//Check adjacent
+				// Check adjacent
 				$adjacents = $this->getAdjacents($row_index, $col_index);
 				$adjacentCnt = 0;
 				foreach ($adjacents as $adjacent) {
@@ -234,7 +236,7 @@ class Map
 		$adjacents = [];
 		$x = $start_x;
 		$y = $start_y;
-		do {
+		while (true) {
 			$x += $change_x;
 			$y += $change_y;
 			if (!isset($this->map[$y][$x])) {
@@ -245,7 +247,7 @@ class Map
 				$adjacents[] = $this->map[$y][$x];
 				break;
 			}
-		} while (true);
+		}
 
 		return $adjacents;
 	}
@@ -270,13 +272,9 @@ abstract class Position
 	}
 }
 
-class Floor extends Position
-{
-}
+class Floor extends Position {}
 
-class Seat extends Position
-{
-}
+class Seat extends Position {}
 
 $adapter = new Map($source);
 echo $adapter->getOccuipiedSeats();

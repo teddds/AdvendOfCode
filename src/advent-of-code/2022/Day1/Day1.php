@@ -38,10 +38,11 @@ class Day1
 	public function getSumOfTopThreeElfWithMostCalories(): int
 	{
 		$spliced = array_splice($this->content, 0, 3);
+
 		return array_sum($spliced);
 	}
 }
 
 $day = new Day1();
 echo 'total Calories of Elf with most Calories: ' . $day->getSumOfElfWithMostCalories() . "\n";
-echo 'total Calories of Top 3 Elfs with most Calories: ' . $day->getSumOfTopThreeElfWithMostCalories(). "\n";;
+echo 'total Calories of Top 3 Elfs with most Calories: ' . $day->getSumOfTopThreeElfWithMostCalories() . "\n";

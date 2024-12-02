@@ -98,51 +98,51 @@ $source = '99
 86
 68';
 
-//$source = '28
-//33
-//18
-//42
-//31
-//14
-//46
-//20
-//48
-//47
-//24
-//23
-//49
-//45
-//19
-//38
-//39
-//11
-//1
-//32
-//25
-//35
-//8
-//17
-//7
-//9
-//4
-//2
-//34
-//10
-//3';
+// $source = '28
+// 33
+// 18
+// 42
+// 31
+// 14
+// 46
+// 20
+// 48
+// 47
+// 24
+// 23
+// 49
+// 45
+// 19
+// 38
+// 39
+// 11
+// 1
+// 32
+// 25
+// 35
+// 8
+// 17
+// 7
+// 9
+// 4
+// 2
+// 34
+// 10
+// 3';
 
-//$source = '
-//16
-//10
-//15
-//5
-//1
-//11
-//7
-//19
-//6
-//12
-//4
-//';
+// $source = '
+// 16
+// 10
+// 15
+// 5
+// 1
+// 11
+// 7
+// 19
+// 6
+// 12
+// 4
+// ';
 class AdapterCalculator
 {
 	private const MAX_HIGHER_THAN = 3;
@@ -193,6 +193,14 @@ class AdapterCalculator
 		return $totalRoutes;
 	}
 
+	public function getArrangments2(): int
+	{
+		$costs = [];
+		$f = $this->startNewVarition2(0, $costs);
+
+		return $f + 1;
+	}
+
 	private function startNewVarition(int $index, int &$totalRoutes): void
 	{
 		$found = false;
@@ -212,14 +220,6 @@ class AdapterCalculator
 				echo $totalRoutes . "\n";
 			}
 		}
-	}
-
-	public function getArrangments2(): int
-	{
-		$costs = [];
-		$f = $this->startNewVarition2(0, $costs);
-
-		return $f + 1;
 	}
 
 	private function startNewVarition2(int $index, array &$costs): int

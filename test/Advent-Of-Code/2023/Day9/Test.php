@@ -24,7 +24,6 @@ class Test extends TestCase
 		$day = new Day(self::SAMPLE_FILE_PART_1);
 		$this->assertEquals(114, $day->getSumExtrapolateValues());
 
-
 		$day = new Day(self::FILE);
 		$this->assertEquals(1884768153, $day->getSumExtrapolateValues());
 	}

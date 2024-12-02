@@ -3,12 +3,6 @@ declare(strict_types=1);
 
 namespace AdventOfCode\Y2023\Day5;
 
-use AdventOfCode\Y2023\Day5\Map;
-use AdventOfCode\Y2023\Day5\MapCollection;
-use AdventOfCode\Y2023\Day5\Range;
-use AdventOfCode\Y2023\Day5\Seeds;
-use AdventOfCode\Y2023\Day5\SimpleRange;
-use AdventOfCode\Y2023\Day5\Stack;
 use Utils;
 
 final class Day

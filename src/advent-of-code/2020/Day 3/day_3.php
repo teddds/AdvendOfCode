@@ -1,4 +1,5 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
 
 $source = 'byr:1971
 eyr:2039
@@ -1140,19 +1141,19 @@ ecl:brn eyr:2026 iyr:2017 hgt:75in
 pid:745302991 byr:1969 hcl:#7394c7
 ';
 
-//$source = 'ecl:gry pid:860033327 eyr:2020 hcl:#fffffd
-//byr:1937 iyr:2017 cid:147 hgt:183cm
+// $source = 'ecl:gry pid:860033327 eyr:2020 hcl:#fffffd
+// byr:1937 iyr:2017 cid:147 hgt:183cm
 //
-//iyr:2013 ecl:amb cid:350 eyr:2023 pid:028048884
-//hcl:#cfa07d byr:1929
+// iyr:2013 ecl:amb cid:350 eyr:2023 pid:028048884
+// hcl:#cfa07d byr:1929
 //
-//hcl:#ae17e1 iyr:2013
-//eyr:2024
-//ecl:brn pid:760753108 byr:1931
-//hgt:179cm
+// hcl:#ae17e1 iyr:2013
+// eyr:2024
+// ecl:brn pid:760753108 byr:1931
+// hgt:179cm
 //
-//hcl:#cfa07d eyr:2025 pid:166559648
-//iyr:2011 ecl:brn hgt:59in';
+// hcl:#cfa07d eyr:2025 pid:166559648
+// iyr:2011 ecl:brn hgt:59in';
 
 $fields = [
 	'byr' => [
@@ -1255,10 +1256,10 @@ foreach ($passports as $passport) {
 	foreach ($fields as $field_id => $field) {
 		if (
 			(
-				!isset($passport[$field_id]) &&
-				$field['required'] === true
-			) ||
-			$field['validation']($passport[$field_id] ?? '') === false
+				!isset($passport[$field_id])
+				&& $field['required'] === true
+			)
+			|| $field['validation']($passport[$field_id] ?? '') === false
 		) {
 			continue 2;
 		}
@@ -1268,10 +1269,10 @@ foreach ($passports as $passport) {
 
 echo '$result: ' . $cnt_valid . "\n";
 
-//$link = 'eula.txt';
-//$source = 'C:\eula.1028.txt';
-//$result = symlink($source, $link);
+// $link = 'eula.txt';
+// $source = 'C:\eula.1028.txt';
+// $result = symlink($source, $link);
 //
-//$text = file_get_contents($link);
+// $text = file_get_contents($link);
 //
-//echo $text;
+// echo $text;

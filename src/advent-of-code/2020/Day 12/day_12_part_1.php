@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
+
 namespace AdventOfCode\Y2020\Day12\Part1;
+
 $source = 'W5
 N3
 W4
@@ -757,15 +759,14 @@ S4
 W2
 F44';
 
-//$source = 'F10
-//N3
-//F7
-//R90
-//F11';
+// $source = 'F10
+// N3
+// F7
+// R90
+// F11';
 
 class Navigator
 {
-	private array $map = [];
 	public const MOVE_NORTH = 'N';
 	public const MOVE_SOUTH = 'S';
 	public const MOVE_EAST = 'E';
@@ -773,6 +774,7 @@ class Navigator
 	public const MOVE_LEFT = 'L';
 	public const MOVE_RIGHT = 'R';
 	public const MOVE_FORWARD = 'F';
+	private array $map = [];
 
 	private State $currentState;
 
@@ -782,22 +784,20 @@ class Navigator
 
 		$rows = explode("\n", $input);
 		foreach ($rows as $index => $row) {
-			if(preg_match('/(\w)(\d+)/', $row, $match)){
+			if (preg_match('/(\w)(\d+)/', $row, $match)) {
 				$this->currentState->move($match[1], (int) $match[2]);
 			}
 		}
 	}
 
-	public function getManhattenDistance(): int {
+	public function getManhattenDistance(): int
+	{
 		return $this->currentState->getDistance();
 	}
 }
 
-class State {
-	public int $x = 0;
-	public int $y = 0;
-	public string $direction = Navigator::MOVE_EAST;
-
+class State
+{
 	private const DIRECTIONS = [
 		Navigator::MOVE_EAST,
 		Navigator::MOVE_WEST,
@@ -810,7 +810,7 @@ class State {
 		Navigator::MOVE_RIGHT,
 	];
 
-	private const DEGREES = [90,180,270,360];
+	private const DEGREES = [90, 180, 270, 360];
 
 	private const NORMAL_ORIENTATION = [
 		Navigator::MOVE_LEFT => [
@@ -824,56 +824,39 @@ class State {
 			Navigator::MOVE_SOUTH => Navigator::MOVE_WEST,
 			Navigator::MOVE_WEST => Navigator::MOVE_NORTH,
 			Navigator::MOVE_NORTH => Navigator::MOVE_EAST,
-		]
+		],
 	];
+	public int $x = 0;
+	public int $y = 0;
+	public string $direction = Navigator::MOVE_EAST;
 
 	private $map = [];
 
-	public function __construct() {
-		//map aufbauen
-		foreach(self::DIRECTIONS as $DIRECTION){
-			foreach(self::ORIENTATIONS as $ORIENTATION){
-				$normalizedDirection = $this->getNormalizeDirection($ORIENTATION,$DIRECTION);
-				foreach(self::DEGREES as $DEGREE){
+	public function __construct()
+	{
+		// map aufbauen
+		foreach (self::DIRECTIONS as $DIRECTION) {
+			foreach (self::ORIENTATIONS as $ORIENTATION) {
+				$normalizedDirection = $this->getNormalizeDirection($ORIENTATION, $DIRECTION);
+				foreach (self::DEGREES as $DEGREE) {
 					$this->map[$DIRECTION][$ORIENTATION][$DEGREE] = $normalizedDirection[$DEGREE];
 				}
 			}
 		}
 	}
 
-	private function getNormalizeDirection(string $orientation, string $startDirection): array {
-		$copy = false;
-		$result = [];
-		foreach(self::NORMAL_ORIENTATION[$orientation] as $from => $to){
-			if($from === $startDirection){
-				$copy = true;
-			}
-			if($copy){
-				$result[] = $to;
-			}
-		}
-
-		foreach(self::NORMAL_ORIENTATION[$orientation] as $from => $to){
-			if($from === $startDirection){
-				break;
-			}
-			$result[] = $to;
-		}
-
-		return array_combine(self::DEGREES, $result);
-	}
-
-	public function changeOrientation(string $orientation, int $degrees){
-		if(!in_array($degrees, self::DEGREES, true)){
-			throw new RuntimeException('Nicht unterstüzte Grad Angabe "'.$degrees.'"');
+	public function changeOrientation(string $orientation, int $degrees)
+	{
+		if (!in_array($degrees, self::DEGREES, true)) {
+			throw new RuntimeException('Nicht unterstüzte Grad Angabe "' . $degrees . '"');
 		}
 
 		$this->direction = $this->map[$this->direction][$orientation][$degrees];
-
 	}
 
-	public function move(string $operation, int $value){
-		switch($operation){
+	public function move(string $operation, int $value)
+	{
+		switch ($operation) {
 			case Navigator::MOVE_NORTH:
 				$this->y += $value;
 				break;
@@ -887,23 +870,44 @@ class State {
 				$this->x -= $value;
 
 				break;
-
 			case Navigator::MOVE_LEFT:
 			case Navigator::MOVE_RIGHT:
-				$this->changeOrientation( $operation, $value);
+				$this->changeOrientation($operation, $value);
 				break;
-
 			case Navigator::MOVE_FORWARD:
 				$this->move($this->direction, $value);
 				break;
 		}
 	}
 
-	public function getDistance(): int {
+	public function getDistance(): int
+	{
 		return abs($this->x) + abs($this->y);
 	}
-}
 
+	private function getNormalizeDirection(string $orientation, string $startDirection): array
+	{
+		$copy = false;
+		$result = [];
+		foreach (self::NORMAL_ORIENTATION[$orientation] as $from => $to) {
+			if ($from === $startDirection) {
+				$copy = true;
+			}
+			if ($copy) {
+				$result[] = $to;
+			}
+		}
+
+		foreach (self::NORMAL_ORIENTATION[$orientation] as $from => $to) {
+			if ($from === $startDirection) {
+				break;
+			}
+			$result[] = $to;
+		}
+
+		return array_combine(self::DEGREES, $result);
+	}
+}
 
 $navigator = new Navigator($source);
 echo $navigator->getManhattenDistance();

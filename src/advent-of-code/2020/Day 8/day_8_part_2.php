@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
+
 namespace AdventOfCode\Y2020\Day8\Part2;
+
 $source = 'nop +355
 acc +46
 jmp +42
@@ -633,15 +635,15 @@ acc +0
 acc +21
 jmp +1';
 
-//$source = 'nop +0
-//acc +1
-//jmp +4
-//acc +3
-//jmp -3
-//acc -99
-//acc +1
-//jmp -4
-//acc +6';
+// $source = 'nop +0
+// acc +1
+// jmp +4
+// acc +3
+// jmp -3
+// acc -99
+// acc +1
+// jmp -4
+// acc +6';
 
 class Bootloader
 {
@@ -662,6 +664,11 @@ class Bootloader
 		for (self::$i = 0, $len = count($rows); self::$i < $len; ++self::$i) {
 			self::parseElement($rows[self::$i], self::$i);
 		}
+	}
+
+	public static function getAcc(): int
+	{
+		return self::$accumulator;
 	}
 
 	private static function parseElement(string $element, int $id)
@@ -685,19 +692,18 @@ class Bootloader
 	private static function add2Historie(int $id)
 	{
 		self::$historie[$id] ??= 0;
-		self::$historie[$id]++;
+		++self::$historie[$id];
 		self::checkForInfinitiveLoop($id);
 	}
 
 	private static function checkForInfinitiveLoop(int $id)
 	{
-		if(self::$historie[$id] === 2){
+		if (self::$historie[$id] === 2) {
 			throw new RuntimeException('Current acc-State: ' . self::$accumulator);
 		}
 	}
 
-	private static function nop(): void
-	{}
+	private static function nop(): void {}
 
 	private static function acc(int $number): void
 	{
@@ -717,43 +723,38 @@ class Bootloader
 
 		return (int) $number * -1;
 	}
-
-	public static function getAcc(): int{
-		return self::$accumulator;
-	}
 }
 
 $rows = explode("\n", $source);
 $lastChangedIndex = -1;
 $copy = $rows;
-do{
-	try{
+do {
+	try {
 		Bootloader::load($copy);
 		echo Bootloader::getAcc();
 		$again = false;
-	}catch (RuntimeException $e){
+	} catch (RuntimeException $e) {
 		$again = true;
 
 		$copy = $rows;
-		for($i = 0, $lenght = count($copy); $i<$lenght; $i++){
-			if($i <= $lastChangedIndex){
+		for ($i = 0, $lenght = count($copy); $i < $lenght; ++$i) {
+			if ($i <= $lastChangedIndex) {
 				continue;
 			}
 
-			if(strpos($copy[$i], 'nop') === 0){
-				$copy[$i] = str_replace('nop','jmp', $copy[$i]);
+			if (strpos($copy[$i], 'nop') === 0) {
+				$copy[$i] = str_replace('nop', 'jmp', $copy[$i]);
 				$lastChangedIndex = $i;
-				echo 'Change Index '. $i .'/'.$lenght."\n";
+				echo 'Change Index ' . $i . '/' . $lenght . "\n";
 				break;
 			}
 
-			if(strpos($copy[$i], 'jmp') === 0){
-				$copy[$i] = str_replace('jmp','nop', $copy[$i]);
+			if (strpos($copy[$i], 'jmp') === 0) {
+				$copy[$i] = str_replace('jmp', 'nop', $copy[$i]);
 				$lastChangedIndex = $i;
-				echo 'Change Index '. $i .'/'.$lenght."\n";
+				echo 'Change Index ' . $i . '/' . $lenght . "\n";
 				break;
 			}
 		}
 	}
-}while($again === true);
-
+} while ($again === true);

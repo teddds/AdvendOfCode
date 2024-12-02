@@ -1002,78 +1002,80 @@ $source = '34
 56785877786078
 106110233739374';
 
-//$source = '35
-//20
-//15
-//25
-//47
-//40
-//62
-//55
-//65
-//95
-//102
-//117
-//150
-//182
-//127
-//219
-//299
-//277
-//309
-//576';
+// $source = '35
+// 20
+// 15
+// 25
+// 47
+// 40
+// 62
+// 55
+// 65
+// 95
+// 102
+// 117
+// 150
+// 182
+// 127
+// 219
+// 299
+// 277
+// 309
+// 576';
 
 $rows = explode("\n", $source);
 
 $preamble_length = 25;
 
-$check = static function(int $currentVal, int $i) use ($preamble_length, $rows) : bool{
-	for($j=$i-$preamble_length; $j<=$i; $j++){
+$check = static function (int $currentVal, int $i) use ($preamble_length, $rows): bool {
+	for ($j = $i - $preamble_length; $j <= $i; ++$j) {
 		$a = (int) $rows[$j];
-		for($z=$i-$preamble_length; $z<=$i; $z++){
+		for ($z = $i - $preamble_length; $z <= $i; ++$z) {
 			$b = (int) $rows[$z];
 
-			if($a+$b === $currentVal){
+			if ($a + $b === $currentVal) {
 				return true;
 			}
 		}
 	}
+
 	return false;
 };
 
-$getInvalidnumberAndIndex = static function() use ($preamble_length, $rows, $check): ?array {
-	for($i=0, $length = count($rows); $i<$length; $i++){
-		if($i<$preamble_length){
+$getInvalidnumberAndIndex = static function () use ($preamble_length, $rows, $check): ?array {
+	for ($i = 0, $length = count($rows); $i < $length; ++$i) {
+		if ($i < $preamble_length) {
 			continue;
 		}
 
 		$currentVal = (int) $rows[$i];
 
-		if(!$check($currentVal, $i)){
+		if (!$check($currentVal, $i)) {
 			return [$currentVal, $i];
 		}
 	}
+
 	return null;
 };
 
-[$invalidNumber, $index] = $getInvalidnumberAndIndex() ?? [0,0];
-for($i=0; $i<$index; $i++){
+[$invalidNumber, $index] = $getInvalidnumberAndIndex() ?? [0, 0];
+for ($i = 0; $i < $index; ++$i) {
 	$sum = 0;
-	for($j=$i; $j<$index; $j++){
+	for ($j = $i; $j < $index; ++$j) {
 		$sum += $rows[$j];
-		if($sum === $invalidNumber){
+		if ($sum === $invalidNumber) {
 			$list = [];
-			for($z=$i; $z<=$j; $z++){
+			for ($z = $i; $z <= $j; ++$z) {
 				$list[] = $rows[$z];
 			}
 			sort($list);
 			$smallest = current($list);
 			$hightest = end($list);
-			echo $smallest . ' + '. $hightest . ' = ' .($smallest+$hightest);
+			echo $smallest . ' + ' . $hightest . ' = ' . ($smallest + $hightest);
 			exit;
 		}
 
-		if($sum > $invalidNumber){
+		if ($sum > $invalidNumber) {
 			break;
 		}
 	}

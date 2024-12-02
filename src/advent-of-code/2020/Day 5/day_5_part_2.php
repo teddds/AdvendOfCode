@@ -1,4 +1,5 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
 
 $source = '
 FFBBBFFLRL
@@ -944,26 +945,22 @@ foreach ($seats as $seat) {
 	$uuid = $row * 8 + $col;
 	echo var_dump($row, $col, $uuid);
 	echo "\n\n";
-	$max = Max($max, $uuid);
+	$max = max($max, $uuid);
 }
 ksort($map);
 
-
-foreach($map as $rowNumber => &$row){
-	if(count($row) === 8) {
+foreach ($map as $rowNumber => &$row) {
+	if (count($row) === 8) {
 		continue;
 	}
 
 	ksort($row);
-	for($i=0; $i<8; $i++){
-		if(!isset($row[$i])){
+	for ($i = 0; $i < 8; ++$i) {
+		if (!isset($row[$i])) {
 			$uuid = $rowNumber * 8 + $i;
 			echo var_dump($uuid);
 			exit;
 		}
 	}
-
 }
 unset($row);
-
-

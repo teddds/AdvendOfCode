@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
+
 namespace AdventOfCode\Y2020\Day11\Part1;
+
 $source = 'LLLLLLLLL.L.LLLLLLLLLLLLL.LLLLLLL.LLLL.LLLLLLLLLLLLLLLLLL.LLLL.LLLLL.LLLLLLL.LLLLL.LLLLLLLLLLLLLLL
 LLLLLLLLLLLLLLLLLLLLLLLLL.LLLLLLLLLLLLLLLLLLLLLL.LLLLLLLL.LLLLLLLLLL.LLLLLLL.LLLLL.LLLLL.LLLLLLLLL
 LLLLLLLLL.LLLLLLLLLLLLLLL.LLLLLLLLLLLLLLLLLLLLLL.LLLLLLLL.LL.LLLLLLL.LLLLLLL.LLLLLLLLLLLLLLLLLLLLL
@@ -100,17 +102,16 @@ LLLLLLLLLLLL.LLL.LLLLLLLL.LLLLLLLLLLLLLLLLLLLLLL.LLLLLLLL.LLLL.LLLLL.LLLLLLL.LLL
 LLLLLLLLLLLLLLLL.LLLLLLLL.LLLL.LL.LLLLLLL.LLLLLL.LLLLLLLL.LLLL.LLLLLLLLLLLLL.LLLLL.LLLLL.LLLLLLLLL
 LLLLLLLL..LLLLLL.LLL.LLLL.LLLLLLL.LLLL.LLLLLLLLL.LLLL.LLL.LLLL.LLLLL.LLLLLLLLLLLLLLLLLLL.LLLLLLLLL';
 
-//$source = 'L.LL.LL.LL
-//LLLLLLL.LL
-//L.L.L..L..
-//LLLL.LL.LL
-//L.LL.LL.LL
-//L.LLLLL.LL
-//..L.L.....
-//LLLLLLLLLL
-//L.LLLLLL.L
-//L.LLLLL.LL';
-
+// $source = 'L.LL.LL.LL
+// LLLLLLL.LL
+// L.L.L..L..
+// LLLL.LL.LL
+// L.LL.LL.LL
+// L.LLLLL.LL
+// ..L.L.....
+// LLLLLLLLLL
+// L.LLLLLL.L
+// L.LLLLL.LL';
 
 class Map
 {
@@ -119,39 +120,42 @@ class Map
 	public function __construct(string $input)
 	{
 		$rows = explode("\n", $input);
-		foreach($rows as $index => $row ){
-			foreach(str_split($row) as $col => $char){
-				if($char === Position::STATE_FLOOR){
-					$this->map[$index][$col] = new Floor(Position::STATE_FLOOR,$index,$col);
-				}elseif($char === Position::STATE_EMPTY){
-					$this->map[$index][$col] = new Seat(Position::STATE_EMPTY,$index,$col);
+		foreach ($rows as $index => $row) {
+			foreach (str_split($row) as $col => $char) {
+				if ($char === Position::STATE_FLOOR) {
+					$this->map[$index][$col] = new Floor(Position::STATE_FLOOR, $index, $col);
+				} elseif ($char === Position::STATE_EMPTY) {
+					$this->map[$index][$col] = new Seat(Position::STATE_EMPTY, $index, $col);
 				}
 			}
 		}
 	}
 
-	public function getOccuipiedSeats(): int {
-		//$this->printMap();
+	public function getOccuipiedSeats(): int
+	{
+		// $this->printMap();
 
-		do{
+		do {
 			$hasChanged = $this->populate();
-			//$this->printMap();
-		}while($hasChanged === true);
+			// $this->printMap();
+		} while ($hasChanged === true);
 
 		$cnt = 0;
-		foreach($this->map as $row_index => $row) {
+		foreach ($this->map as $row_index => $row) {
 			foreach ($row as $col_index => $item) {
 				if ($item instanceof Seat && $item->state === Seat::STATE_OCCUIPIED) {
-					$cnt++;
+					++$cnt;
 				}
 			}
 		}
+
 		return $cnt;
 	}
 
-	private function printMap(){
+	private function printMap()
+	{
 		echo "\n";
-		foreach($this->map as $row_index => $row) {
+		foreach ($this->map as $row_index => $row) {
 			foreach ($row as $col_index => $item) {
 				echo $item->state;
 			}
@@ -159,38 +163,39 @@ class Map
 		}
 	}
 
-	private function populate(): bool{
+	private function populate(): bool
+	{
 		$changed = false;
-		foreach($this->map as $row_index => $row){
-			foreach($row as $col_index => $item) {
-				if($item instanceof Floor){
+		foreach ($this->map as $row_index => $row) {
+			foreach ($row as $col_index => $item) {
+				if ($item instanceof Floor) {
 					continue;
 				}
 
-				//Check adjacent
+				// Check adjacent
 				$adjacent = 0;
-				for($i=$row_index-1; $i<$row_index+2; $i++){
-					for($j=$col_index-1; $j<$col_index+2; $j++){
-						if($i === $row_index && $j === $col_index){
+				for ($i = $row_index - 1; $i < $row_index + 2; ++$i) {
+					for ($j = $col_index - 1; $j < $col_index + 2; ++$j) {
+						if ($i === $row_index && $j === $col_index) {
 							continue;
 						}
-						if(isset($this->map[$i][$j]) && $this->map[$i][$j] instanceof Seat && $this->map[$i][$j]->state === Position::STATE_OCCUIPIED){
-							$adjacent++;
+						if (isset($this->map[$i][$j]) && $this->map[$i][$j] instanceof Seat && $this->map[$i][$j]->state === Position::STATE_OCCUIPIED) {
+							++$adjacent;
 						}
 					}
 				}
 
-				if($item->state === Position::STATE_EMPTY && $adjacent === 0){
+				if ($item->state === Position::STATE_EMPTY && $adjacent === 0) {
 					$changed = true;
 					$item->preState = Position::STATE_OCCUIPIED;
-				}elseif($item->state === Position::STATE_OCCUIPIED && $adjacent >= 4){
+				} elseif ($item->state === Position::STATE_OCCUIPIED && $adjacent >= 4) {
 					$changed = true;
 					$item->preState = Position::STATE_EMPTY;
 				}
 			}
 		}
 
-		foreach($this->map as $row_index => $row) {
+		foreach ($this->map as $row_index => $row) {
 			foreach ($row as $col_index => $item) {
 				$item->state = $item->preState;
 			}
@@ -198,11 +203,10 @@ class Map
 
 		return $changed;
 	}
-
 }
 
-
-abstract class Position {
+abstract class Position
+{
 	public const STATE_FLOOR = '.';
 	public const STATE_EMPTY = 'L';
 	public const STATE_OCCUIPIED = '#';
@@ -210,7 +214,9 @@ abstract class Position {
 	public int $col;
 	public string $state;
 	public string $preState;
-	public function __construct(string $state, int $row, int $col) {
+
+	public function __construct(string $state, int $row, int $col)
+	{
 		$this->state = $state;
 		$this->preState = $state;
 		$this->col = $col;
@@ -218,13 +224,9 @@ abstract class Position {
 	}
 }
 
-class Floor extends Position {
+class Floor extends Position {}
 
-}
-
-class Seat extends Position {
-
-}
+class Seat extends Position {}
 
 $adapter = new Map($source);
 echo $adapter->getOccuipiedSeats();

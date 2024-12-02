@@ -1002,55 +1002,55 @@ $source = '34
 56785877786078
 106110233739374';
 
-//$source = '35
-//20
-//15
-//25
-//47
-//40
-//62
-//55
-//65
-//95
-//102
-//117
-//150
-//182
-//127
-//219
-//299
-//277
-//309
-//576';
+// $source = '35
+// 20
+// 15
+// 25
+// 47
+// 40
+// 62
+// 55
+// 65
+// 95
+// 102
+// 117
+// 150
+// 182
+// 127
+// 219
+// 299
+// 277
+// 309
+// 576';
 
 $rows = explode("\n", $source);
 
 $preamble_length = 25;
 
-$check = static function(int $currentVal, int $i) use ($preamble_length, $rows){
-	for($j=$i-$preamble_length; $j<=$i; $j++){
+$check = static function (int $currentVal, int $i) use ($preamble_length, $rows) {
+	for ($j = $i - $preamble_length; $j <= $i; ++$j) {
 		$a = (int) $rows[$j];
-		for($z=$i-$preamble_length; $z<=$i; $z++){
+		for ($z = $i - $preamble_length; $z <= $i; ++$z) {
 			$b = (int) $rows[$z];
 
-			if($a+$b === $currentVal){
+			if ($a + $b === $currentVal) {
 				return true;
 			}
 		}
 	}
+
 	return false;
 };
 
-for($i=0, $length = count($rows); $i<$length; $i++){
-	if($i<$preamble_length){
+for ($i = 0, $length = count($rows); $i < $length; ++$i) {
+	if ($i < $preamble_length) {
 		continue;
 	}
 
 	$currentVal = (int) $rows[$i];
 
-	if(!$check($currentVal, $i)){
+	if (!$check($currentVal, $i)) {
 		echo $currentVal;
 		exit;
 	}
-
 }
