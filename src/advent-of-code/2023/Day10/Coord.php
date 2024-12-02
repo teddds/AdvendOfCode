@@ -30,6 +30,77 @@ final class Coord
 		return false;
 	}
 
+	public function getNextElementInNorth(): Coord
+	{
+		return $this->grid->getAt($this->x, $this->y - 1);
+	}
+
+	public function getNextElementInEast(): Coord
+	{
+		return $this->grid->getAt($this->x + 1, $this->y);
+	}
+
+	public function getNextElementInWest(): Coord
+	{
+		return $this->grid->getAt($this->x - 1, $this->y);
+	}
+
+	public function getNextElementInSouth(): Coord
+	{
+		return $this->grid->getAt($this->x, $this->y + 1);
+	}
+
+	public function getNextElementInDirection(Direction $direction): Coord
+	{
+		return match ($direction) {
+			Direction::NORTH => $this->getNextElementInNorth(),
+			Direction::EAST => $this->getNextElementInEast(),
+			Direction::WEST => $this->getNextElementInWest(),
+			Direction::SOUTH => $this->getNextElementInSouth(),
+		};
+	}
+
+	public function isEnclosedBy(array $loopCoords): bool
+	{
+		// Check 4 all directions
+		$isInLoop = [];
+
+		$directions = [];
+		foreach (Direction::cases() as $direction) {
+			$directions[] = [
+				'direction' => $direction,
+				'element' => $this,
+			];
+		}
+
+		while (true) {
+			try {
+				$allDone = 0;
+				/** @var array{direction: Direction, element: Coord} $direction */
+				foreach ($directions as &$direction) {
+					if (isset($isInLoop[$direction['direction']->value])) {
+						++$allDone;
+						continue;
+					}
+					$e = $direction['element']->getNextElementInDirection($direction['direction']);
+
+					if (isset($loopCoords[$e->y][$e->x])) {
+						$isInLoop[$direction['direction']->value] = true;
+					}
+
+					$direction['element'] = $e;
+				}
+				unset($direction);
+
+				if ($allDone === 4) {
+					return true;
+				}
+			} catch (OutOfGridException $e) {
+				return false;
+			}
+		}
+	}
+
 	public function getNext(?self $previousCoord = null): ?Coord
 	{
 		if (!$this->isPipeSymbol()) {

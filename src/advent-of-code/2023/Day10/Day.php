@@ -18,11 +18,11 @@ final class Day
 		return $this->grid->getMaxDistance();
 	}
 
-	public function getSumExtrapolateValuesBackwards(): int
+	public function getCountEnclosedPointsInLoop(): int
 	{
 		$this->readInput();
 
-		return array_sum(array_map(static fn (MathRow $row) => $row->getNextExtrapolateValueBackwards(), $this->mathRows));
+		return $this->grid->getCountEnclosedPointsInLoop();
 	}
 
 	private function readInput(): void
