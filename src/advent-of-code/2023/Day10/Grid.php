@@ -53,7 +53,7 @@ final class Grid
 						static fn (Direction $a, Direction $b) => $a->value <=> $b->value
 					));
 					if (!$direction instanceof Direction) {
-                        throw new LogicException('Intersects in no Direction countable');
+						throw new LogicException('Intersects in no Direction countable');
 					}
 				} else {
 					$direction = $this->getSearchDirectionFromCoord($coord);

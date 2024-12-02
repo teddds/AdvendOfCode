@@ -41,25 +41,25 @@ class Test extends TestCase
 		$this->assertEquals(6860, $day->getFarthesPoint());
 	}
 
-    // TODO
-//	/**
-//	 * @test
-//	 */
-//	public function farthesPointWithinLoop(): void
-//	{
-////		$day = new Day(self::PART_2_SAMPLE_FILE_1);
-////		$this->assertEquals(4, $day->getCountEnclosedPointsInLoop());
-////
-////        $day = new Day(self::PART_2_SAMPLE_FILE_2);
-////        $this->assertEquals(4, $day->getCountEnclosedPointsInLoop());
-//
-//		$day = new Day(self::PART_2_SAMPLE_FILE_3);
-//		$this->assertEquals(8, $day->getCountEnclosedPointsInLoop());
-//
-//		$day = new Day(self::PART_2_SAMPLE_FILE_4);
-//		$this->assertEquals(10, $day->getCountEnclosedPointsInLoop());
-//
-//		$day = new Day(self::FILE);
-//		$this->assertEquals(6860, $day->getCountEnclosedPointsInLoop());
-//	}
+	// TODO
+	//	/**
+	//	 * @test
+	//	 */
+	//	public function farthesPointWithinLoop(): void
+	//	{
+	// //		$day = new Day(self::PART_2_SAMPLE_FILE_1);
+	// //		$this->assertEquals(4, $day->getCountEnclosedPointsInLoop());
+	// //
+	// //        $day = new Day(self::PART_2_SAMPLE_FILE_2);
+	// //        $this->assertEquals(4, $day->getCountEnclosedPointsInLoop());
+	//
+	//		$day = new Day(self::PART_2_SAMPLE_FILE_3);
+	//		$this->assertEquals(8, $day->getCountEnclosedPointsInLoop());
+	//
+	//		$day = new Day(self::PART_2_SAMPLE_FILE_4);
+	//		$this->assertEquals(10, $day->getCountEnclosedPointsInLoop());
+	//
+	//		$day = new Day(self::FILE);
+	//		$this->assertEquals(6860, $day->getCountEnclosedPointsInLoop());
+	//	}
 }
