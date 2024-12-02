@@ -35,5 +35,9 @@ jobs:
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
+    - name: Run CS-Fixer suite
+      run: php bin/composer.phar run-script php-cs-fixer-dry
+
     - name: Run test suite
       run: php bin/composer.phar run-script phpunit_advendofcode_2023
+
