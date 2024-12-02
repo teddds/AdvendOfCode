@@ -33,6 +33,7 @@
 			"AdventOfCode\\Y2022\\": "src/advent-of-code/2022/",
 			"AdventOfCode\\Y2020\\": "src/advent-of-code/2020/",
 			"AdventOfCode\\Y2023\\": "src/advent-of-code/2023/",
+			"AdventOfCode\\Y2024\\": "src/advent-of-code/2024/",
 			"Festo\\Y2022\\": "src/festo/2022/"
 		},
 		"classmap": [
@@ -42,6 +43,7 @@
 	"scripts": {
 		"phpunit_advendofcode_2022": "php -dxdebug.coverage_enable=true vendor/bin/phpunit --configuration=phpunit.xml --testsuite=AdventOfCode2022 --coverage-xml=test/_reports/coverage-xml --coverage-cobertura=test/_reports/cobertura-coverage.xml --log-junit=test/_reports/unit.junit.xml",
 		"phpunit_advendofcode_2023": "php -dxdebug.coverage_enable=true vendor/bin/phpunit --configuration=phpunit.xml --testsuite=AdventOfCode2023 --coverage-xml=test/_reports/coverage-xml --coverage-cobertura=test/_reports/cobertura-coverage.xml --log-junit=test/_reports/unit.junit.xml",
+		"phpunit_advendofcode_2024": "php -dxdebug.coverage_enable=true vendor/bin/phpunit --configuration=phpunit.xml --testsuite=AdventOfCode2024 --coverage-xml=test/_reports/coverage-xml --coverage-cobertura=test/_reports/cobertura-coverage.xml --log-junit=test/_reports/unit.junit.xml",
 		"phpunit_festo_2022": "php -dxdebug.coverage_enable=true vendor/bin/phpunit --configuration=phpunit.xml --testsuite=Festo2022 --coverage-xml=test/_reports/coverage-xml --coverage-cobertura=test/_reports/cobertura-coverage.xml --log-junit=test/_reports/unit.junit.xml"
 	}
 }
