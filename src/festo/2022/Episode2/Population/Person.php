@@ -1,11 +1,10 @@
-<?php declare(strict_types=1);
-
+<?php
+declare(strict_types=1);
 
 namespace Festo\Y2022\Episode2;
 
-
-class Person {
-
+class Person
+{
 	public string $name = '';
 	public ?int $id = null;
 	public ?BloodSample $bloodSample = null;

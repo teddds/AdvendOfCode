@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace AdventOfCode\Y2020\Day14\Part1;
 
 $source = 'mask = X10X11X1000101X1XX001100001X101X0111
@@ -589,16 +590,15 @@ mem[4762] = 21717
 mem[26613] = 40
 ';
 
-//$source = 'mask = XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X
-//mem[8] = 11
-//mem[7] = 101
-//mem[8] = 0'
-//;
+// $source = 'mask = XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X
+// mem[8] = 11
+// mem[7] = 101
+// mem[8] = 0'
+// ;
 
 class Bitmask
 {
-
-	/** @var Operation[]  */
+	/** @var Operation[] */
 	private array $operations = [];
 
 	public function __construct(string $input)
@@ -606,18 +606,18 @@ class Bitmask
 		$rows = explode("\n", $input);
 		$mask = null;
 		foreach ($rows as $row) {
-			if(preg_match('/^mask = (.+?)$/', $row, $match)){
+			if (preg_match('/^mask = (.+?)$/', $row, $match)) {
 				$mask = $match[1];
-			}else if(preg_match('/^mem\[(\d+)] = (.+?)$/', $row, $match) && $mask){
-				$this->operations[] = new Operation((int)$match[1], (int) $match[2], $mask);
+			} elseif (preg_match('/^mem\[(\d+)] = (.+?)$/', $row, $match) && $mask) {
+				$this->operations[] = new Operation((int) $match[1], (int) $match[2], $mask);
 			}
 		}
 	}
 
-	public function getSum(): int {
-
+	public function getSum(): int
+	{
 		$result = [];
-		foreach($this->operations as $operation){
+		foreach ($this->operations as $operation) {
 			$result[$operation->getIndex()] = $operation->getMaskValue();
 		}
 
@@ -625,12 +625,14 @@ class Bitmask
 	}
 }
 
-class Operation {
+class Operation
+{
 	private int $index;
 	private int $value;
 	private string $mask;
 
-	public function __construct(int $index, int $value, string $mask) {
+	public function __construct(int $index, int $value, string $mask)
+	{
 		$this->index = $index;
 		$this->value = $value;
 		$this->mask = $mask;
@@ -639,27 +641,32 @@ class Operation {
 	/**
 	 * @return int
 	 */
-	public function getIndex(): int {
+	public function getIndex(): int
+	{
 		return $this->index;
 	}
 
-	public function getMaskValue(): int {
+	public function getMaskValue(): int
+	{
 		$bits = $this->convertDecimalToBits($this->value, strlen($this->mask));
 		$maskbits = $this->applyMask($bits);
+
 		return $this->convertBitsToDecimal($maskbits);
 	}
 
-	private function convertDecimalToBits(int $number, int $padding): string {
+	private function convertDecimalToBits(int $number, int $padding): string
+	{
 		return str_pad(decbin($number), $padding, '0', STR_PAD_LEFT);
 	}
 
-	private function applyMask(string $bits): string {
-		for($i=strlen($this->mask)-1; $i>=0; $i--){
-			if($this->mask[$i] === '0'){
+	private function applyMask(string $bits): string
+	{
+		for ($i = strlen($this->mask) - 1; $i >= 0; --$i) {
+			if ($this->mask[$i] === '0') {
 				$bits[$i] = '0';
 			}
 
-			if($this->mask[$i] === '1'){
+			if ($this->mask[$i] === '1') {
 				$bits[$i] = '1';
 			}
 		}
@@ -667,7 +674,8 @@ class Operation {
 		return $bits;
 	}
 
-	private function convertBitsToDecimal(string $bits): int {
+	private function convertBitsToDecimal(string $bits): int
+	{
 		return bindec($bits);
 	}
 }

@@ -1,10 +1,12 @@
 <?php
 declare(strict_types=1);
+
 namespace AdventOfCode\Y2020\Day13\Part2;
+
 $source = '1002632
 23,x,x,x,x,x,x,x,x,x,x,x,x,41,x,x,x,x,x,x,x,x,x,829,x,x,x,x,x,x,x,x,x,x,x,x,13,17,x,x,x,x,x,x,x,x,x,x,x,x,x,x,29,x,677,x,x,x,x,x,37,x,x,x,x,x,x,x,x,x,x,x,x,19';
-//$source = '939
-//7,13,x,x,59,x,31,19';
+// $source = '939
+// 7,13,x,x,59,x,31,19';
 
 class Navigator
 {
@@ -15,7 +17,7 @@ class Navigator
 	private int $length;
 	private int $start = 0;
 	private ?int $ende = null;
-	//private int $start = 1001076912749;
+	// private int $start = 1001076912749;
 	private array $processes = [];
 	private int $timestamp = 0;
 	private ?int $result = null;
@@ -92,7 +94,7 @@ class Navigator
 			$path .= ' -dxdebug.remote_autostart=1 -dxdebug.remote_enable=1 -dxdebug.remote_mode=req -dxdebug.remote_port=9000 -dxdebug.remote_host=localhost -dxdebug.remote_connect_back=0';
 		}
 
-		$path .= ' "' . __FILE__ . '" --start=' . $start . ' --ende=' . $ende. ' --name='.$name;
+		$path .= ' "' . __FILE__ . '" --start=' . $start . ' --ende=' . $ende . ' --name=' . $name;
 
 		$p_id = md5($start . $ende);
 		$this->processes[$p_id] = [
@@ -111,9 +113,9 @@ class Navigator
 	{
 		$delta = 10010769127490;
 		$start = 140000000000000;
-		//Wir haben die maximale Anzahl an parallelarbeitenen Prozesse erreicht, jetzt heißt es warten (Nur bei MP)
-		do {
-			$this->createProcesses($start, $start + $delta, 'p_'.self::$idCounter++);
+		// Wir haben die maximale Anzahl an parallelarbeitenen Prozesse erreicht, jetzt heißt es warten (Nur bei MP)
+		while (true) {
+			$this->createProcesses($start, $start + $delta, 'p_' . self::$idCounter++);
 			while (count($this->processes) >= self::MAX_PARALLEL_PROCESSES) {
 				sleep(1);
 				$this->checkProcesses();
@@ -122,7 +124,7 @@ class Navigator
 				break;
 			}
 			$start += $delta;
-		} while (true);
+		}
 	}
 
 	private function checkProcesses(): void
@@ -131,9 +133,9 @@ class Navigator
 			if (is_resource($prozess['prozess'])) {
 				$status = proc_get_status($prozess['prozess']);
 
-				$result =fgets($prozess['pipes'][1], 512);
-				if(!empty($result)){
-					$result = trim($result, " ");
+				$result = fgets($prozess['pipes'][1], 512);
+				if (!empty($result)) {
+					$result = trim($result, ' ');
 					$prozess['log'] .= $result;
 					echo $result;
 				}
@@ -144,7 +146,7 @@ class Navigator
 					unset($this->processes[$p_id]);
 
 					if (preg_match('/Lösung: (\d+)$/u', $prozess['log'], $match)) {
-						//Lösung gefunden Alle Prozess beenden!
+						// Lösung gefunden Alle Prozess beenden!
 						$this->stopAll();
 						$this->result = (int) $match[1];
 						break;
@@ -219,10 +221,10 @@ class Bus
 
 	public function getNextDepartTime(): int
 	{
-//		++$this->vielfaches;
-//		$this->results[$this->vielfaches] ??= $this->vielfaches * $this->id - $this->offset;
-//
-//		return $this->results[$this->vielfaches];
+		//		++$this->vielfaches;
+		//		$this->results[$this->vielfaches] ??= $this->vielfaches * $this->id - $this->offset;
+		//
+		//		return $this->results[$this->vielfaches];
 
 		return $this->vielfaches++ * $this->id - $this->offset;
 	}

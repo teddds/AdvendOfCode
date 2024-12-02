@@ -109,25 +109,23 @@ $source = '16
 12
 4';
 
-$rows = array_map(static function(string $val){ return (int) $val;},explode("\n", $source));
+$rows = array_map(static function (string $val) { return (int) $val; }, explode("\n", $source));
 $rows[] = 0;
 sort($rows);
 $max_higher_than = 3;
 $max = end($rows) + $max_higher_than;
 $rows[] = $max;
 $results = [];
-foreach($rows as $index => $val){
-	if($val === $max){
+foreach ($rows as $index => $val) {
+	if ($val === $max) {
 		break;
 	}
-	for($i=1; $i<=$max_higher_than; $i++){
-		$results[$i] ??=0;
-		if($val + $i === $rows[$index+1]){
-			$results[$i]++;
+	for ($i = 1; $i <= $max_higher_than; ++$i) {
+		$results[$i] ??= 0;
+		if ($val + $i === $rows[$index + 1]) {
+			++$results[$i];
 		}
 	}
 }
 
 var_dump($results[1] * $results[3]);
-
-

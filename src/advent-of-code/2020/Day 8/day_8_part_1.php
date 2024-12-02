@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
+
 namespace AdventOfCode\Y2020\Day8\Part1;
+
 $source = 'nop +355
 acc +46
 jmp +42
@@ -633,15 +635,15 @@ acc +0
 acc +21
 jmp +1';
 
-//$source = 'nop +0
-//acc +1
-//jmp +4
-//acc +3
-//jmp -3
-//acc -99
-//acc +1
-//jmp -4
-//acc +6';
+// $source = 'nop +0
+// acc +1
+// jmp +4
+// acc +3
+// jmp -3
+// acc -99
+// acc +1
+// jmp -4
+// acc +6';
 
 class Bootloader
 {
@@ -683,19 +685,18 @@ class Bootloader
 	private static function add2Historie(int $id)
 	{
 		self::$historie[$id] ??= 0;
-		self::$historie[$id]++;
+		++self::$historie[$id];
 		self::checkForInfinitiveLoop($id);
 	}
 
 	private static function checkForInfinitiveLoop(int $id)
 	{
-		if(self::$historie[$id] === 2){
+		if (self::$historie[$id] === 2) {
 			throw new RuntimeException('Current acc-State: ' . self::$accumulator);
 		}
 	}
 
-	private static function nop(): void
-	{}
+	private static function nop(): void {}
 
 	private static function acc(int $number): void
 	{

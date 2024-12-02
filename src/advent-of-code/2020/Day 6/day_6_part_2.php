@@ -1,4 +1,5 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
 
 $source = 'vkplsqwiftuazyje
 mokluxwbsfhgc
@@ -2132,21 +2133,21 @@ qbltyocnjvigse
 oriqujavzntpblfw
 vmqltjciondkeb';
 
-//$source = 'abc
+// $source = 'abc
 //
-//a
-//b
-//c
+// a
+// b
+// c
 //
-//ab
-//ac
+// ab
+// ac
 //
-//a
-//a
-//a
-//a
+// a
+// a
+// a
+// a
 //
-//b';
+// b';
 
 $rows = explode("\n", $source);
 $groups = [];
@@ -2158,7 +2159,7 @@ foreach ($rows as $row) {
 	}
 	$groups[$cnt] ??= ['questions' => [], 'persons' => 0];
 
-	$groups[$cnt]['persons']++;
+	++$groups[$cnt]['persons'];
 
 	$content = str_split($row);
 	foreach ($content as $value) {
@@ -2169,9 +2170,9 @@ foreach ($rows as $row) {
 
 $sum = 0;
 foreach ($groups as $group) {
-	foreach($group['questions'] as $questionId => $persons){
-		if($persons === $group['persons']){
-			$sum++;
+	foreach ($group['questions'] as $questionId => $persons) {
+		if ($persons === $group['persons']) {
+			++$sum;
 		}
 	}
 }

@@ -1,5 +1,8 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
+
 namespace AdventOfCode\Y2020\Day7\Part1;
+
 $source = 'muted lavender bags contain 5 dull brown bags, 4 pale maroon bags, 2 drab orange bags.
 plaid aqua bags contain 1 posh violet bag, 5 pale yellow bags, 4 bright salmon bags.
 wavy lime bags contain 3 vibrant indigo bags, 1 posh gray bag.
@@ -595,15 +598,15 @@ faded gold bags contain 4 pale yellow bags.
 vibrant beige bags contain 2 light lavender bags, 3 faded indigo bags.
 light brown bags contain 3 drab brown bags, 4 dark violet bags, 3 faded indigo bags.';
 
-//$source = 'light red bags contain 1 bright white bag, 2 muted yellow bags.
-//dark orange bags contain 3 bright white bags, 4 muted yellow bags.
-//bright white bags contain 1 shiny gold bag.
-//muted yellow bags contain 2 shiny gold bags, 9 faded blue bags.
-//shiny gold bags contain 1 dark olive bag, 2 vibrant plum bags.
-//dark olive bags contain 3 faded blue bags, 4 dotted black bags.
-//vibrant plum bags contain 5 faded blue bags, 6 dotted black bags.
-//faded blue bags contain no other bags.
-//dotted black bags contain no other bags.';
+// $source = 'light red bags contain 1 bright white bag, 2 muted yellow bags.
+// dark orange bags contain 3 bright white bags, 4 muted yellow bags.
+// bright white bags contain 1 shiny gold bag.
+// muted yellow bags contain 2 shiny gold bags, 9 faded blue bags.
+// shiny gold bags contain 1 dark olive bag, 2 vibrant plum bags.
+// dark olive bags contain 3 faded blue bags, 4 dotted black bags.
+// vibrant plum bags contain 5 faded blue bags, 6 dotted black bags.
+// faded blue bags contain no other bags.
+// dotted black bags contain no other bags.';
 
 $rows = array_values(array_filter(explode("\n", $source)));
 $groups = [];
@@ -619,17 +622,18 @@ foreach ($rows as $row) {
 	Bag::addBagtoCollection($bag);
 }
 
-$shiny = Bag::findBagByColorAndAttribute('shiny','gold');
+$shiny = Bag::findBagByColorAndAttribute('shiny', 'gold');
 $parents = $shiny->getParentsAll();
 
 var_dump(count($parents));
 
-class Bag {
+class Bag
+{
 	public string $color;
 	public string $attribute;
 	/** @var Contains[] */
 	public array $contains = [];
-	/** @var Bag[]  */
+	/** @var Bag[] */
 	public static array $collection = [];
 
 	public function __construct($attribute, $color, $contains = [])
@@ -639,35 +643,36 @@ class Bag {
 		$this->contains = $contains;
 	}
 
-	public function getId(): string {
+	public function getId(): string
+	{
 		return md5($this->color . $this->attribute);
 	}
 
-	public static function getBagFromString($string): ?Bag {
-		if(!preg_match('/(\w+) (\w+) (bag|bags)/', $string, $result)){
+	public static function getBagFromString($string): ?Bag
+	{
+		if (!preg_match('/(\w+) (\w+) (bag|bags)/', $string, $result)) {
 			return null;
 		}
 
 		[$original, $attribute, $color] = $result;
 		$bag = new Bag($attribute, $color, []);
 
-
-
 		return self::getBagFromCollection($bag->getId()) ?? $bag;
 	}
 
-	public static function getSubBags(string $string): array {
+	public static function getSubBags(string $string): array
+	{
 		$bags = [];
 		$tmp = explode(',', $string);
-		foreach($tmp as $color_string){
+		foreach ($tmp as $color_string) {
 			$color_string = trim($color_string);
-			if($color_string === 'no other bags.'){
+			if ($color_string === 'no other bags.') {
 				continue;
 			}
 
-			if(preg_match('/(\d+) ((\w+) (\w+) (bag|bags))/', $color_string, $match)){
+			if (preg_match('/(\d+) ((\w+) (\w+) (bag|bags))/', $color_string, $match)) {
 				$bag = self::getBagFromString($match[2]);
-				if($bag){
+				if ($bag) {
 					$bags[] = new Contains((int) $match[1], $bag);
 				}
 			}
@@ -676,58 +681,65 @@ class Bag {
 		return $bags;
 	}
 
-	public static function getBagFromCollection(string $id):? Bag{
+	public static function getBagFromCollection(string $id): ?Bag
+	{
 		return self::$collection[$id] ?? null;
 	}
 
-	public static function addBagtoCollection(Bag $bag): void {
-		if(isset(self::$collection[$bag->getId()])){
+	public static function addBagtoCollection(Bag $bag): void
+	{
+		if (isset(self::$collection[$bag->getId()])) {
 			trigger_error('Element bereits vorhanden!');
 		}
 		self::$collection[$bag->getId()] = $bag;
 	}
 
-	public static function findBagByColorAndAttribute(string $attribute, string $color) :? Bag{
-		return self::getBagFromCollection( md5($color . $attribute));
+	public static function findBagByColorAndAttribute(string $attribute, string $color): ?Bag
+	{
+		return self::getBagFromCollection(md5($color . $attribute));
 	}
 
 	/** @return Bag[] */
-	public function getParents(): array {
+	public function getParents(): array
+	{
 		$id = $this->getId();
 		$parents = [];
-		foreach(self::$collection as $bag){
-			foreach($bag->contains as $contain){
-				if($contain->bag->getId() === $id){
+		foreach (self::$collection as $bag) {
+			foreach ($bag->contains as $contain) {
+				if ($contain->bag->getId() === $id) {
 					$parents[$bag->getId()] = $bag;
 				}
 			}
 		}
+
 		return $parents;
 	}
 
-	public function getParentsAll(): array {
+	public function getParentsAll(): array
+	{
 		$result = $this->getParents();
-		if(empty($result)){
+		if (empty($result)) {
 			return [];
 		}
 		$mr = [$result];
-		foreach($result as $parent){
+		foreach ($result as $parent) {
 			$mr[] = $parent->getParentsAll();
 		}
 
 		$mr = array_merge([], ...$mr);
-		return $mr;
 
+		return $mr;
 	}
 }
 
-class Contains {
+class Contains
+{
 	public int $count;
 	public Bag $bag;
-	public function __construct($count,$bag)
+
+	public function __construct($count, $bag)
 	{
 		$this->count = $count;
 		$this->bag = $bag;
 	}
 }
-

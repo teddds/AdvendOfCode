@@ -1,4 +1,5 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
 
 $source = '
 FFBBBFFLRL
@@ -942,7 +943,6 @@ foreach ($seats as $seat) {
 	$uuid = $row * 8 + $col;
 	echo var_dump($row, $col, $uuid);
 	echo "\n\n";
-	$max = Max($max, $uuid);
+	$max = max($max, $uuid);
 }
 echo var_dump($max);
-

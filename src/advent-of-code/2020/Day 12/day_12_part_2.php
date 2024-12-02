@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
+
 namespace AdventOfCode\Y2020\Day12\Part2;
+
 $source = 'W5
 N3
 W4
@@ -757,15 +759,14 @@ S4
 W2
 F44';
 
-//$source = 'F10
-//N3
-//F7
-//R90
-//F11';
+// $source = 'F10
+// N3
+// F7
+// R90
+// F11';
 
 class Navigator
 {
-	private array $map = [];
 	public const MOVE_NORTH = 'N';
 	public const MOVE_SOUTH = 'S';
 	public const MOVE_EAST = 'E';
@@ -773,6 +774,7 @@ class Navigator
 	public const MOVE_LEFT = 'L';
 	public const MOVE_RIGHT = 'R';
 	public const MOVE_FORWARD = 'F';
+	private array $map = [];
 
 	private State $currentState;
 
@@ -782,52 +784,54 @@ class Navigator
 
 		$rows = explode("\n", $input);
 		foreach ($rows as $index => $row) {
-			if(preg_match('/(\w)(\d+)/', $row, $match)){
+			if (preg_match('/(\w)(\d+)/', $row, $match)) {
 				$this->currentState->move($match[1], (int) $match[2]);
 			}
 		}
 	}
 
-	public function getManhattenDistance(): int {
+	public function getManhattenDistance(): int
+	{
 		return $this->currentState->getDistance();
 	}
 }
 
-class State {
-
-	private int $rel_x = 10;
-	private int $rel_y = 1;
+class State
+{
+	private const DEGREES = [90, 180, 270, 360];
 
 	public int $x = 0;
 	public int $y = 0;
 	public string $direction = Navigator::MOVE_EAST;
 
-	private const DEGREES = [90,180,270,360];
+	private int $rel_x = 10;
+	private int $rel_y = 1;
 
-	public function changeOrientation(string $orientation, int $degrees){
-		if(!in_array($degrees, self::DEGREES, true)){
-			throw new RuntimeException('Nicht unterstüzte Grad Angabe "'.$degrees.'"');
+	public function changeOrientation(string $orientation, int $degrees)
+	{
+		if (!in_array($degrees, self::DEGREES, true)) {
+			throw new RuntimeException('Nicht unterstüzte Grad Angabe "' . $degrees . '"');
 		}
 
-		foreach(self::DEGREES as $DEGREE){
-			if($orientation === Navigator::MOVE_RIGHT){
+		foreach (self::DEGREES as $DEGREE) {
+			if ($orientation === Navigator::MOVE_RIGHT) {
 				$tmp = $this->rel_y;
 				$this->rel_y = $this->rel_x * -1;
 				$this->rel_x = $tmp;
-			}else{
+			} else {
 				$tmp = $this->rel_x;
 				$this->rel_x = $this->rel_y * -1;
 				$this->rel_y = $tmp;
 			}
-			if($degrees === $DEGREE ){
+			if ($degrees === $DEGREE) {
 				break;
 			}
 		}
-
 	}
 
-	public function move(string $operation, int $value){
-		switch($operation){
+	public function move(string $operation, int $value)
+	{
+		switch ($operation) {
 			case Navigator::MOVE_NORTH:
 				$this->rel_y += $value;
 				break;
@@ -841,24 +845,21 @@ class State {
 				$this->rel_x -= $value;
 
 				break;
-
 			case Navigator::MOVE_LEFT:
 			case Navigator::MOVE_RIGHT:
-				$this->changeOrientation( $operation, $value);
+				$this->changeOrientation($operation, $value);
 				break;
-
 			case Navigator::MOVE_FORWARD:
 				$this->y += $value * $this->rel_y;
 				$this->x += $value * $this->rel_x;
 		}
 	}
 
-	public function getDistance(): int {
+	public function getDistance(): int
+	{
 		return abs($this->x) + abs($this->y);
 	}
-
 }
-
 
 $navigator = new Navigator($source);
 echo $navigator->getManhattenDistance();
