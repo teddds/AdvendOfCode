@@ -1,4 +1,4 @@
-name: PHP Composer
+name: CI Pipeline
 
 on:
   push:
@@ -11,33 +11,101 @@ permissions:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
+    # Checkout Code
+    - name: Checkout code
+      uses: actions/checkout@v3
+    # Setup PHP
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1' # Wählen Sie die benötigte PHP-Version
+        tools: composer
+    # Install Composer dependencies
+    - name: Install dependencies
+      run: composer install --no-progress --no-suggest --prefer-dist
 
-    - name: Validate composer.json and composer.lock
-      run: php bin/composer.phar validate --strict
-
-    - name: Cache Composer packages
-      id: composer-cache
+    # Cache Composer dependencies
+    - name: Cache Composer dependencies
       uses: actions/cache@v3
       with:
         path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
-          ${{ runner.os }}-php-
+          ${{ runner.os }}-composer-
 
-    - name: Install dependencies
-      run: php bin/composer.phar install --prefer-dist --no-progress
+  lint:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
-    # Docs: https://getcomposer.org/doc/articles/scripts.md
+      # Setup PHP
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          tools: composer
 
-    - name: Run CS-Fixer suite
-      run: php bin/composer.phar run-script php-cs-fixer-dry
+      # Restore Composer dependencies
+      - name: Restore Composer dependencies
+        uses: actions/cache@v3
+        with:
+         path: vendor
+         key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+         restore-keys: |
+           ${{ runner.os }}-composer-
+      - name: Run CS-Fixer suite
+        run: php bin/composer.phar run-script php-cs-fixer-dry
 
-    - name: Run test suite
-      run: php bin/composer.phar run-script phpunit_advendofcode_2023
+  test_aoc_2023:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Setup PHP
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          tools: composer
+
+      # Restore Composer dependencies
+      - name: Restore Composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+      - name: AdventOfCode 2023
+        run: php bin/composer.phar run-script phpunit_advendofcode_2023
+  test_aoc_2024:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Setup PHP
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          tools: composer
+
+      # Restore Composer dependencies
+      - name: Restore Composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+      - name: AdventOfCode 2024
+        run: php bin/composer.phar run-script phpunit_advendofcode_2024
 

@@ -35,7 +35,11 @@
 			"AdventOfCode\\Y2020\\": "src/advent-of-code/2020/",
 			"AdventOfCode\\Y2023\\": "src/advent-of-code/2023/",
 			"AdventOfCode\\Y2024\\": "src/advent-of-code/2024/",
-			"Festo\\Y2022\\": "src/festo/2022/"
+			"Festo\\Y2022\\": "src/festo/2022/",
+			"Test\\AdventOfCode\\Y2022\\": "test/Advent-Of-Code/2022/",
+			"Test\\AdventOfCode\\Y2023\\": "test/Advent-Of-Code/2023/",
+			"Test\\AdventOfCode\\Y2024\\": "test/Advent-Of-Code/2024/",
+			"Test\\Festo\\Y2022\\": "src/festo/2022/"
 		},
 		"classmap": [
 			"src"

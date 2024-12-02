@@ -7,70 +7,57 @@ use Utils;
 
 final class Day
 {
+	/** @var int[] */
+	private array $listA = [];
+	/** @var int[] */
+	private array $listB = [];
+
 	public function __construct(private readonly string $inputPath) {}
 
-	public function getSumCalibrationValues(): int
+	public function getTotalDistance(): int
 	{
-		$sum = 0;
 		foreach (Utils::readFile($this->inputPath) as $line) {
 			// get First and Last Digits of line
-			$sum += $this->getNumberFromLine($line);
+			$this->addNumbersToList($line);
+		}
+		sort($this->listA);
+		sort($this->listB);
+
+		$distance = 0;
+		foreach ($this->listA as $key => $number) {
+			$distance += abs($number - $this->listB[$key]);
 		}
 
-		return $sum;
+		return $distance;
 	}
 
-	public function getSumCalibrationSpellingValues(): int
+	public function getSimilarity(): int
 	{
-		$sum = 0;
 		foreach (Utils::readFile($this->inputPath) as $line) {
-			$line = $this->convertSpelledDigitsToRealDigits($line);
-
 			// get First and Last Digits of line
-			$sum += $this->getNumberFromLine($line);
+			$this->addNumbersToList($line);
 		}
 
-		return $sum;
+		$tmp = [];
+		foreach ($this->listB as $number) {
+			if (isset($tmp[$number])) {
+				++$tmp[$number];
+			} else {
+				$tmp[$number] = 1;
+			}
+		}
+		$similarity = 0;
+		foreach ($this->listA as $key => $number) {
+			$similarity += $number * ($tmp[$number] ?? 0);
+		}
+
+		return $similarity;
 	}
 
-	private function convertSpelledDigitsToRealDigits(string $line): string
+	private function addNumbersToList(string $line): void
 	{
-		// in Wortgruppen aufbrechen
-		$mapping = [
-			'one' => 1, 'two' => 2, 'three' => 3, 'four' => 4, 'five' => 5,
-			'six' => 6, 'seven' => 7, 'eight' => 8, 'nine' => 9,
-		];
-
-		$group = implode('|', array_keys($mapping));
-
-		$patterns = [
-			'/^[a-z]*?(' . $group . ')/', // First Occurence
-			'/.*(' . $group . ')/', // Last Occurence
-		];
-
-		foreach ($patterns as $pattern) {
-			$line = preg_replace_callback(
-				$pattern,
-				static function ($match) use ($mapping) {
-					return str_replace($match[1], (string) $mapping[$match[1]], $match[0]);
-				},
-				$line,
-				1
-			);
-		}
-
-		return $line;
-	}
-
-	private function getNumberFromLine(string $line): int
-	{
-		if (!preg_match_all('/\d/', $line, $matches)) {
-			return 0;
-		}
-
-		$first = reset($matches[0]);
-		$last = end($matches[0]);
-
-		return (int) ($first . $last);
+		[$a, $b] = array_values(array_filter(explode(' ', $line)));
+		$this->listA[] = (int) $a;
+		$this->listB[] = (int) $b;
 	}
 }
