@@ -5,13 +5,9 @@ namespace AdventOfCode\Y2022\Day2;
 
 enum SteinScherePapier: int
 {
-	case STEIN = self::STEIN_SCORE;
-	case PAPIER = self::PAPIER_SCORE;
-	case SCHERE = self::SCHERE_SCORE;
-
-	private const STEIN_SCORE = 1;
-	private const PAPIER_SCORE = 2;
-	private const SCHERE_SCORE = 3;
+	case STEIN = 1;
+	case PAPIER = 2;
+	case SCHERE = 3;
 
 	private const WIN = 6;
 	private const LOST = 0;
