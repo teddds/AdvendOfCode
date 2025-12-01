@@ -30,6 +30,12 @@
 		<testsuite name="AdventOfCode2023">
 			<directory suffix="Test.php">test/Advent-Of-Code/2023</directory>
 		</testsuite>
+        <testsuite name="AdventOfCode2024">
+            <directory suffix="Test.php">test/Advent-Of-Code/2024</directory>
+        </testsuite>
+        <testsuite name="AdventOfCode2025">
+            <directory suffix="Test.php">test/Advent-Of-Code/2025</directory>
+        </testsuite>
 		<testsuite name="Festo2022">
 			<directory suffix="Test.php">test/Festo/2022</directory>
 		</testsuite>
