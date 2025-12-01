@@ -49,7 +49,7 @@ class SafeRotator
 
 	private function rotateLeft(int $value): void
 	{
-        if (($this->current - $value) < self::MIN) {
+		if (($this->current - $value) < self::MIN) {
 			$rest = $value - $this->current;
 			if ($this->countEveryDialPointZero && $this->current !== self::MIN) {
 				++$this->zeroCount;
