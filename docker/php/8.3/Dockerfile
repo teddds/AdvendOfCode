@@ -1,9 +1,9 @@
-FROM composer:2.5 AS composer
-FROM ubuntu:22.04 AS app
+FROM composer:2.8 AS composer
+FROM ubuntu:24.04 AS app
 
 SHELL ["/usr/bin/env", "bash", "-euo", "pipefail", "-O", "extglob", "-c"]
 
-ARG PHP_VERSION=8.1
+ARG PHP_VERSION=8.3
 ARG PHP_FPM_INI_DIR=/etc/php/${PHP_VERSION}/fpm
 ARG PHP_CLI_INI_DIR=/etc/php/${PHP_VERSION}/cli
 
@@ -19,11 +19,10 @@ RUN sed -i 's|http://|https://|g' /etc/apt/sources.list.d/ubuntu.sources
 
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
-   apt update && apt-get --no-install-recommends install -y \
+   apt-get update && apt-get --no-install-recommends install -y \
     	curl \
     	gpg-agent \
-		software-properties-common; \
-    add-apt-repository ppa:ondrej/php;
+		software-properties-common;
 
 # Axilaris root CA hinzufügen
 ADD --chmod=664 https://pki.axs-net.de/current_axilaris_root.crt /usr/local/share/ca-certificates/axilaris_ca.crt
@@ -31,7 +30,7 @@ RUN update-ca-certificates;
 
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
-   apt update && apt-get --no-install-recommends install -y \
+   apt-get update && apt-get --no-install-recommends install -y \
 		sqlite3 \
 		zip \
     	zstd \
@@ -96,6 +95,7 @@ RUN groupadd -r nginx; \
 COPY 30-settings.ini $PHP_FPM_INI_DIR/conf.d
 COPY 30-settings.ini $PHP_CLI_INI_DIR/conf.d
 COPY fpm/zz-docker.conf $PHP_FPM_INI_DIR/pool.d/zz-docker.conf
+COPY fpm/zz-docker-env.conf $PHP_FPM_INI_DIR/pool.d/zz-docker-env.conf
 ARG XDEBUG_LOG_LEVEL=3
 ARG XDEBUG_FPM_MODE=debug
 ARG XDEBUG_CLI_MODE=debug
@@ -120,9 +120,3 @@ STOPSIGNAL SIGQUIT
 
 WORKDIR /var/www
 CMD ["php-fpm"]
-
-
-
-FROM app AS dev
-COPY 40-development-settings.ini $PHP_FPM_INI_DIR/conf.d
-COPY 40-development-settings.ini $PHP_CLI_INI_DIR/conf.d
