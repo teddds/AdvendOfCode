@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 namespace AdventOfCode\Y2025\Day2;
 
+/**
+ * https://www.linkedin.com/pulse/efficient-pattern-matching-knuth-morris-pratt-algorithm-ali-raza-hp12e
+ * Knuth-Morris-Pratt Algorithm
+ */
 class MaxPeriodDetector
 {
 	private string $string;

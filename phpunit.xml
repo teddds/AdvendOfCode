@@ -1,43 +1,45 @@
 <?xml version="1.0"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
+		 xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/12.4/phpunit.xsd"
 		 bootstrap="test/bootstrap.php"
 		 beStrictAboutOutputDuringTests="false"
-		 beStrictAboutTodoAnnotatedTests="true"
-		 verbose="true"
-		 cacheResult="true"
+         cacheResult="true"
 		 backupGlobals="false"
+         cacheDirectory="test/cache"
+         defaultTestSuite="AdventOfCode2025"
 >
-	<coverage cacheDirectory="test/cache"
-			  includeUncoveredFiles="false"
-			  processUncoveredFiles="false"
-			  pathCoverage="false"
-			  ignoreDeprecatedCodeUnits="true"
-			  disableCodeCoverageIgnore="false">
-		<include>
-			<directory suffix=".php">src</directory>
-		</include>
 
-		<report>
-			<html outputDirectory="test/_reports/coverage" lowUpperBound="50" highLowerBound="90"/>
-		</report>
-	</coverage>
+    <source>
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+    </source>
+
+<!--	<coverage-->
+<!--			  includeUncoveredFiles="false"-->
+<!--			  pathCoverage="false"-->
+<!--			  ignoreDeprecatedCodeUnits="true"-->
+<!--			  disableCodeCoverageIgnore="false">-->
+<!--		<report>-->
+<!--			<html outputDirectory="test/_reports/coverage" lowUpperBound="50" highLowerBound="90"/>-->
+<!--		</report>-->
+<!--	</coverage>-->
 
 	<testsuites>
 		<testsuite name="AdventOfCode2022">
-			<directory suffix="Test.php">test/Advent-Of-Code/2022</directory>
+			<directory>test/Advent-Of-Code/2022</directory>
 		</testsuite>
 		<testsuite name="AdventOfCode2023">
-			<directory suffix="Test.php">test/Advent-Of-Code/2023</directory>
+			<directory>test/Advent-Of-Code/2023</directory>
 		</testsuite>
         <testsuite name="AdventOfCode2024">
-            <directory suffix="Test.php">test/Advent-Of-Code/2024</directory>
+            <directory>test/Advent-Of-Code/2024</directory>
         </testsuite>
         <testsuite name="AdventOfCode2025">
-            <directory suffix="Test.php">test/Advent-Of-Code/2025</directory>
+            <directory>test/Advent-Of-Code/2025</directory>
         </testsuite>
 		<testsuite name="Festo2022">
-			<directory suffix="Test.php">test/Festo/2022</directory>
+			<directory>test/Festo/2022</directory>
 		</testsuite>
 	</testsuites>
 
