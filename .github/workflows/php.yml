@@ -102,3 +102,9 @@ jobs:
         with:
           name: "coverage-${{ matrix.suite }}"
           path: test/_reports/coverage
+
+      # Optional: Upload für GitHub Coverage-Auswertung
+      - name: Upload LCOV to Code Scanning
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: test/_reports/coverage/clover-${{ matrix.suite }}.xml
