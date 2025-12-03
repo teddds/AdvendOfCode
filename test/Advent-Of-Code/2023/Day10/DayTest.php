@@ -4,28 +4,24 @@ declare(strict_types=1);
 namespace Test\AdventOfCode\Y2023\Day10;
 
 use AdventOfCode\Y2023\Day10\Day;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \AdventOfCode\Y2023\Day10\Day
- *
- * @internal
- */
-class Test extends TestCase
+#[CoversClass(Day::class)]
+class DayTest extends TestCase
 {
-	private const FILE = __DIR__ . DIRECTORY_SEPARATOR . 'input.txt';
-	private const PART_1_SAMPLE_FILE_1 = __DIR__ . DIRECTORY_SEPARATOR . 'Part1SampleFile1.txt';
-	private const PART_1_SAMPLE_FILE_2 = __DIR__ . DIRECTORY_SEPARATOR . 'Part1SampleFile2.txt';
-	private const PART_1_SAMPLE_FILE_3 = __DIR__ . DIRECTORY_SEPARATOR . 'Part1SampleFile3.txt';
+	private const string FILE = __DIR__ . DIRECTORY_SEPARATOR . 'input.txt';
+	private const string PART_1_SAMPLE_FILE_1 = __DIR__ . DIRECTORY_SEPARATOR . 'Part1SampleFile1.txt';
+	private const string PART_1_SAMPLE_FILE_2 = __DIR__ . DIRECTORY_SEPARATOR . 'Part1SampleFile2.txt';
+	private const string PART_1_SAMPLE_FILE_3 = __DIR__ . DIRECTORY_SEPARATOR . 'Part1SampleFile3.txt';
 
-	private const PART_2_SAMPLE_FILE_1 = __DIR__ . DIRECTORY_SEPARATOR . 'Part2SampleFile1.txt';
-	private const PART_2_SAMPLE_FILE_2 = __DIR__ . DIRECTORY_SEPARATOR . 'Part2SampleFile2.txt';
-	private const PART_2_SAMPLE_FILE_3 = __DIR__ . DIRECTORY_SEPARATOR . 'Part2SampleFile3.txt';
-	private const PART_2_SAMPLE_FILE_4 = __DIR__ . DIRECTORY_SEPARATOR . 'Part2SampleFile4.txt';
+	private const string PART_2_SAMPLE_FILE_1 = __DIR__ . DIRECTORY_SEPARATOR . 'Part2SampleFile1.txt';
+	private const string PART_2_SAMPLE_FILE_2 = __DIR__ . DIRECTORY_SEPARATOR . 'Part2SampleFile2.txt';
+	private const string PART_2_SAMPLE_FILE_3 = __DIR__ . DIRECTORY_SEPARATOR . 'Part2SampleFile3.txt';
+	private const string PART_2_SAMPLE_FILE_4 = __DIR__ . DIRECTORY_SEPARATOR . 'Part2SampleFile4.txt';
 
-	/**
-	 * @test
-	 */
+	#[Test]
 	public function farthesPoint(): void
 	{
 		$day = new Day(self::PART_1_SAMPLE_FILE_1);

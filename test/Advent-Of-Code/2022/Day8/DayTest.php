@@ -4,25 +4,24 @@ declare(strict_types=1);
 namespace Test\AdventOfCode\Y2022\Day8;
 
 use AdventOfCode\Y2022\Day8\TreeMapOperator;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-class Test extends TestCase
+#[CoversClass(TreeMapOperator::class)]
+class DayTest extends TestCase
 {
-	public const FILE = __DIR__ . DIRECTORY_SEPARATOR . 'input.txt';
+	public const string FILE = __DIR__ . DIRECTORY_SEPARATOR . 'input.txt';
 
-	/**
-	 * @test
-	 */
-	public function visibleAmountTest(): void
+	#[Test]
+	public function visibleAmount(): void
 	{
 		$fs = new TreeMapOperator(self::FILE);
 		$this->assertEquals(21, $fs->getAmountVisibleTrees());
 	}
 
-	/**
-	 * @test
-	 */
-	public function getScenicScoreTest(): void
+	#[Test]
+	public function getScenicScore(): void
 	{
 		$fs = new TreeMapOperator(self::FILE);
 		$this->assertEquals(8, $fs->getMaxScenicScore());

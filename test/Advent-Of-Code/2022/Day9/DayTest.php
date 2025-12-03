@@ -4,18 +4,19 @@ declare(strict_types=1);
 namespace Test\AdventOfCode\Y2022\Day9;
 
 use AdventOfCode\Y2022\Day9\BridgeGridOperator;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
-class Test extends TestCase
+#[CoversClass(BridgeGridOperator::class)]
+class DayTest extends TestCase
 {
-	public const FILE = __DIR__ . DIRECTORY_SEPARATOR . 'input.txt';
-	public const MULTPLE_FILE = __DIR__ . DIRECTORY_SEPARATOR . 'multiple_input.txt';
+	public const string FILE = __DIR__ . DIRECTORY_SEPARATOR . 'input.txt';
+	public const string MULTPLE_FILE = __DIR__ . DIRECTORY_SEPARATOR . 'multiple_input.txt';
 
-	/**
-	 * @test
-	 */
-	public function oneKnotTest(): void
+	#[Test]
+	public function oneKnot(): void
 	{
 		$fs = new BridgeGridOperator(self::FILE, true);
 		$this->assertEquals(13, $fs->getUsedTilesByTail());
@@ -30,10 +31,8 @@ class Test extends TestCase
 		$this->assertEquals(6044, $fs->getUsedTilesByTail());
 	}
 
-	/**
-	 * @test
-	 */
-	public function multipleKnotTest(): void
+	#[Test]
+	public function multipleKnot(): void
 	{
 		//		$fs = new BridgeGridOperator(self::FILE, true, 9);
 		//		$this->assertEquals(1, $fs->getUsedTilesByTail());
