@@ -55,9 +55,21 @@ jobs:
       - name: Run CS-Fixer suite
         run: php bin/composer.phar run-script php-cs-fixer-dry
 
-  test_aoc_2023:
+  phpunit:
     needs: build
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        suite:
+ #         - Festo2022
+ #         - AdventOfCode2022
+          - AdventOfCode2023
+          - AdventOfCode2024
+          - AdventOfCode2025
+
+    name: "PHPUnit (${{ matrix.suite }})"
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -68,6 +80,7 @@ jobs:
         with:
           php-version: '8.3'
           tools: composer
+          coverage: xdebug
 
       # Restore Composer dependencies
       - name: Restore Composer dependencies
@@ -76,53 +89,16 @@ jobs:
           path: vendor
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}-${{ hashFiles('**/composer.json') }}
 
-      - name: AdventOfCode 2023
-        run: php bin/composer.phar run-script phpunit_advendofcode_2023
-  test_aoc_2024:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Run test suite
+        run: |
+          echo "Running test suite: ${{ matrix.suite }}"
+          vendor/bin/phpunit \
+          --configuration=phpunit.xml \
+          --testsuite=${{ matrix.suite }} \
+          --coverage-clover=test/_reports/coverage/clover-${{ matrix.suite }}.xml \
 
-      # Setup PHP
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+      - name: Upload coverage artifacts
+        uses: actions/upload-artifact@v4
         with:
-          php-version: '8.3'
-          tools: composer
-
-      # Restore Composer dependencies
-      - name: Restore Composer dependencies
-        uses: actions/cache@v3
-        with:
-          path: vendor
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}-${{ hashFiles('**/composer.json') }}
-
-      - name: AdventOfCode 2024
-        run: php bin/composer.phar run-script phpunit_advendofcode_2024
-
-  test_aoc_2025:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      # Setup PHP
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.3'
-          tools: composer
-
-      # Restore Composer dependencies
-      - name: Restore Composer dependencies
-        uses: actions/cache@v3
-        with:
-          path: vendor
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}-${{ hashFiles('**/composer.json') }}
-
-      - name: AdventOfCode 2025
-        run: php bin/composer.phar run-script phpunit_advendofcode_2025
-
+          name: "coverage-${{ matrix.suite }}"
+          path: test/_reports/coverage
