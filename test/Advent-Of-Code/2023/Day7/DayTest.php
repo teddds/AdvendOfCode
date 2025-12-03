@@ -5,22 +5,17 @@ namespace Test\AdventOfCode\Y2023\Day7;
 
 use AdventOfCode\Y2023\Day7\CardDeck;
 use AdventOfCode\Y2023\Day7\Day;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \AdventOfCode\Y2023\Day7\Day
- *
- * @internal
- */
-class Test extends TestCase
+#[CoversClass(Day::class)]
+class DayTest extends TestCase
 {
-	private const FILE = __DIR__ . DIRECTORY_SEPARATOR . 'input.txt';
-	private const SAMPLE_FILE_PART_1 = __DIR__ . DIRECTORY_SEPARATOR . 'inputPart1Sample.txt';
-	private const SAMPLE_FILE_PART_2 = __DIR__ . DIRECTORY_SEPARATOR . 'inputPart2Sample.txt';
+	private const string FILE = __DIR__ . DIRECTORY_SEPARATOR . 'input.txt';
+	private const string SAMPLE_FILE_PART_1 = __DIR__ . DIRECTORY_SEPARATOR . 'inputPart1Sample.txt';
 
-	/**
-	 * @test
-	 */
+	#[Test]
 	public function sumBid(): void
 	{
 		$day = new Day(self::SAMPLE_FILE_PART_1);
@@ -30,9 +25,7 @@ class Test extends TestCase
 		$this->assertEquals(248453531, $day->getSumBid());
 	}
 
-	/**
-	 * @test
-	 */
+	#[Test]
 	public function sumBidWithJokers(): void
 	{
 		$day = new Day(self::SAMPLE_FILE_PART_1);
@@ -42,9 +35,7 @@ class Test extends TestCase
 		$this->assertEquals(248781813, $day->getSumBid(joker: true));
 	}
 
-	/**
-	 * @test
-	 */
+	#[Test]
 	public function compareTest(): void
 	{
 		$list = [

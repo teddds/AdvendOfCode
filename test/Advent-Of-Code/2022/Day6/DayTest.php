@@ -4,14 +4,15 @@ declare(strict_types=1);
 namespace Test\AdventOfCode\Y2022\Day6;
 
 use AdventOfCode\Y2022\Day6\BufferStreamReader;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-class Test extends TestCase
+#[CoversClass(BufferStreamReader::class)]
+class DayTest extends TestCase
 {
-	/**
-	 * @test
-	 */
-	public function findMarkerTest(): void
+	#[Test]
+	public function findMarker(): void
 	{
 		$tests = [
 			'mjqjpqmgbljsphdztnvjfqwrcgsmlb' => 7,
@@ -26,9 +27,7 @@ class Test extends TestCase
 		}
 	}
 
-	/**
-	 * @test
-	 */
+	#[Test]
 	public function groupScoreTest(): void
 	{
 		$tests = [

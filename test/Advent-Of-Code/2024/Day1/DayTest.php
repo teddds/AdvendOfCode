@@ -4,21 +4,17 @@ declare(strict_types=1);
 namespace Test\AdventOfCode\Y2024\Day1;
 
 use AdventOfCode\Y2024\Day1\Day;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \AdventOfCode\Y2024\Day1\Day
- *
- * @internal
- */
-class Test extends TestCase
+#[CoversClass(Day::class)]
+class DayTest extends TestCase
 {
-	private const FILE = __DIR__ . DIRECTORY_SEPARATOR . 'input.txt';
-	private const SAMPLE_FILE_PART_1 = __DIR__ . DIRECTORY_SEPARATOR . 'inputPart1Sample.txt';
+	private const string FILE = __DIR__ . DIRECTORY_SEPARATOR . 'input.txt';
+	private const string SAMPLE_FILE_PART_1 = __DIR__ . DIRECTORY_SEPARATOR . 'inputPart1Sample.txt';
 
-	/**
-	 * @test
-	 */
+	#[Test]
 	public function totalDistanceTest(): void
 	{
 		$day = new Day(self::SAMPLE_FILE_PART_1);
@@ -28,9 +24,7 @@ class Test extends TestCase
 		$this->assertEquals(1834060, $day->getTotalDistance());
 	}
 
-	/**
-	 * @test
-	 */
+	#[Test]
 	public function similarityTest(): void
 	{
 		$day = new Day(self::SAMPLE_FILE_PART_1);
